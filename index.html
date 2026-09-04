@@ -6,7 +6,7 @@
 <title>0D</title>
 <meta name="description" content="0D — the GooberNet game pile.">
 <link rel="icon" type="image/png" href="favicon-v2.png?v=1">
-<link rel="stylesheet" href="style.css?v=15">
+<link rel="stylesheet" href="style.css?v=16">
 </head>
 <body>
 <div class="scan">
@@ -139,7 +139,7 @@
 <section class="announce-admin">
 <div class="announce-auth"><button id="announce-signin" type="button">OWNER SIGN IN</button><button id="announce-signout" type="button" hidden>SIGN OUT</button><p id="announce-auth-status">viewing as a normie</p></div>
 <div id="announce-setup" hidden><p>OWNER SETUP CODE</p><code id="announce-uid"></code><button id="announce-copy-uid" type="button">COPY CODE</button></div>
-<form id="announce-form" hidden><label for="announce-title">TITLE</label><input id="announce-title" maxlength="120" required placeholder="important goober news"><label for="announce-body">MESSAGE</label><textarea id="announce-body" maxlength="2000" required placeholder="type announcement... :D"></textarea><button type="submit">ANNOUNCE →</button><p id="announce-form-status"></p></form>
+<form id="announce-form" hidden><label for="announce-title">TITLE</label><input id="announce-title" maxlength="120" required placeholder="important goober news"><label for="announce-body">MESSAGE</label><textarea id="announce-body" maxlength="2000" required placeholder="type announcement... :D"></textarea><label for="announce-image">IMAGE (OPTIONAL)</label><input id="announce-image" type="file" accept="image/png,image/jpeg,image/webp"><label class="poll-switch"><input id="announce-add-poll" type="checkbox"> ADD A VOTE THING</label><div id="announce-poll-fields" hidden><label for="announce-poll-question">QUESTION</label><input id="announce-poll-question" maxlength="150" placeholder="which creature wins"><label>CHOICES (2–4)</label><input class="poll-option" maxlength="80" placeholder="choice 1"><input class="poll-option" maxlength="80" placeholder="choice 2"><input class="poll-option" maxlength="80" placeholder="choice 3 (optional)"><input class="poll-option" maxlength="80" placeholder="choice 4 (optional)"></div><button type="submit">ANNOUNCE →</button><p id="announce-form-status"></p></form>
 </section>
 <section id="announcement-list" class="announcement-list" aria-live="polite"><p class="announce-empty">checking...</p></section>
 </div>
@@ -247,7 +247,7 @@
 <p class="frame-note">meow</p>
 </section>
 </main>
-<script src="app.js?v=10">
+<script src="app.js?v=11">
 </script>
 </body>
 </html>

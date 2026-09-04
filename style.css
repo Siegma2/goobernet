@@ -224,3 +224,21 @@ aside>p{margin:8px 5px 0}
 .chat-empty{margin:0;padding:24px;color:#a96e75;text-align:center}
 #chat-send-form{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:10px}
 @media(max-width:620px){#chat-join-form{grid-template-columns:1fr}#chat-join-form button{width:100%}.chat-owner-entry{align-items:stretch;flex-direction:column}.chat-message{padding-right:13px}.chat-delete{position:static;margin-top:9px}.chat-messages{height:52vh}}
+
+.poll-switch{display:flex;align-items:center;gap:8px;padding:9px;background:#17070a;border:1px dashed #8d313b;cursor:pointer}
+#announce-form .poll-switch input{width:auto;accent-color:#e00024}
+#announce-poll-fields{display:grid;gap:8px;padding:10px;background:#080304;border:1px solid #552029}
+#announce-poll-fields[hidden]{display:none}
+.announcement-image{display:block;width:100%;max-height:460px;margin-top:14px;object-fit:contain;background:#070203;border:1px solid #84333d}
+.poll-box{margin-top:15px;padding:13px;background:#090304;border:1px dashed #9d3b48}
+.poll-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.poll-head h4{margin:0;color:#ffd7dc;font-size:1rem}
+.poll-state{flex:none;padding:3px 6px;color:#190408;background:#ff8292;font-size:.65rem}
+.poll-options{display:grid;gap:7px;margin-top:11px}
+.poll-choice{display:grid;grid-template-columns:1fr auto;gap:12px;width:100%;padding:10px 12px;color:#f7dce0;background:#28080d;border:1px solid #7b2632;text-align:left;font:inherit;font-weight:800;cursor:pointer}
+.poll-choice:hover:not(:disabled),.poll-choice:focus-visible:not(:disabled){background:#7d101f;border-color:#ff9aa6}
+.poll-choice:disabled{cursor:default;opacity:.72}.poll-choice.chosen{color:#fff;background:#a81028;border-color:#ffb1bc;opacity:1}
+.poll-choice b{min-width:2ch;color:#ffb0ba;text-align:right}
+.poll-footer{display:flex;justify-content:flex-end;margin-top:10px}
+.end-vote{padding:7px 9px;color:#fff;background:#790f1d;border:1px solid #ff9aa6;font:inherit;font-size:.7rem;font-weight:900;cursor:pointer}
+.end-vote:hover,.end-vote:focus-visible{background:#e00024}
