@@ -277,3 +277,4 @@ aside>p{margin:8px 5px 0}
 .poll-footer{display:flex;justify-content:flex-end;margin-top:10px}
 .end-vote{padding:7px 9px;color:#fff;background:#790f1d;border:1px solid #ff9aa6;font:inherit;font-size:.7rem;font-weight:900;cursor:pointer}
 .end-vote:hover,.end-vote:focus-visible{background:#e00024}
+.track-credit{font-size:12px;line-height:1.25;margin-top:-4px}.track-credit a{color:#ff9aa6;text-decoration:none}.track-credit a:hover,.track-credit a:focus{text-decoration:underline}

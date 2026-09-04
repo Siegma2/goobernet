@@ -6,7 +6,7 @@
 <title>0D</title>
 <meta name="description" content="0D — the GooberNet game pile.">
 <link rel="icon" type="image/png" href="favicon-v2.png?v=1">
-<link rel="stylesheet" href="style.css?v=19">
+<link rel="stylesheet" href="style.css?v=20">
 </head>
 <body>
 <section id="important-banner" class="important-banner" hidden><button id="important-open" type="button"><b>IMPORTANT UPDATE</b><strong id="important-title"></strong><span id="important-text"></span></button><button id="important-dismiss" type="button" aria-label="Dismiss important update">×</button></section>
@@ -35,12 +35,14 @@
 <canvas id="visualizer" width="300" height="86" aria-label="Audio visualizer">
 </canvas>
 <div class="mini-controls">
-<button id="audio-toggle" type="button">PLAY LOOP</button>
+<button id="audio-toggle" type="button">PLAY MONKEYS</button>
 <label for="audio-upload">UPLOAD SONG</label>
 <input id="audio-upload" type="file" accept="audio/*">
 </div>
-<p id="track-name">built-in goober loop</p>
+<p id="track-name">Monkeys Spinning Monkeys</p>
+<p class="track-credit"><a href="https://incompetech.com/music/royalty-free/index.html?Search=Search&amp;isrc=USUAN1400011" target="_blank" rel="noopener">Kevin MacLeod · CC BY 4.0</a></p>
 <audio id="temp-audio" loop>
+<source src="monkeys-spinning-monkeys.mp3" type="audio/mpeg">
 </audio>
 </section>
 <p>giving you games<br> since 2023 <3</p>
@@ -249,7 +251,7 @@
 </section>
 </main>
 <section id="toast-stack" class="toast-stack" aria-live="polite" aria-label="Site notifications"></section>
-<script src="app.js?v=15">
+<script src="app.js?v=16">
 </script>
 <script src="firebase-v2.js?v=2"></script>
 </body>
