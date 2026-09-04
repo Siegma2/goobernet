@@ -2,7 +2,7 @@
 
 official site name: **Dimension 0**
 
-or **0D** because saying the whole thing takes too long. this is a website. probably.
+or **0D** because saying the whole thing will ruin your attention span 
 
 ## we have games
 
