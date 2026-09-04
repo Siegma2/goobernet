@@ -235,6 +235,21 @@ aside>p{margin:8px 5px 0}
 @media(max-width:720px){.notification-toggle{margin:5px}.toast-stack{right:14px;bottom:14px}}
 @media(prefers-reduced-motion:reduce){.site-toast{transition:none}}
 
+#owner-announce-tools{display:grid;gap:8px}
+#owner-announce-tools[hidden]{display:none}
+.admin-panel{margin-top:15px;padding:12px;background:#030811;border:1px solid #287ac8;box-shadow:4px 4px 0 #041f3c}
+.admin-panel h3{margin:0 0 10px;color:#63b9ff;font-size:.9rem}
+#admin-add-form{display:grid;gap:7px}
+#admin-status{min-height:1.2em;margin:8px 0;color:#78bfff;font-size:.72rem}
+#admin-list{display:grid;gap:6px;margin-top:8px;color:#83b9e8;font-size:.7rem}
+.admin-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px;align-items:center;padding:7px;background:#061525;border:1px solid #174f80}
+.admin-row span{overflow-wrap:anywhere}.admin-remove{padding:6px!important;color:#dcefff!important;background:#073762!important;border-color:#55aef7!important;font-size:.62rem}
+.admin-message{border-left-color:#238ee9;background:#031426;box-shadow:inset 0 0 18px rgba(16,127,255,.12)}
+.admin-message b,.admin-message p{color:#4fb2ff;text-shadow:0 0 7px rgba(20,128,255,.65)}
+.admin-badge{display:inline-block;width:max-content;margin-top:7px;padding:2px 5px;color:#eff9ff!important;background:#0871cf;border:1px solid #8bd0ff;font-size:.67rem;font-weight:900;text-shadow:none!important}
+.admin-announcement{border-color:#287ac8;box-shadow:5px 5px 0 #041f3c}
+.admin-announcement time,.admin-announcement h3{color:#70c2ff}
+
 .poll-switch{display:flex;align-items:center;gap:8px;padding:9px;background:#17070a;border:1px dashed #8d313b;cursor:pointer}
 #announce-form .poll-switch input{width:auto;accent-color:#e00024}
 #announce-poll-fields{display:grid;gap:8px;padding:10px;background:#080304;border:1px solid #552029}
