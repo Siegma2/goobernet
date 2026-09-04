@@ -138,7 +138,7 @@
 <div class="page-head"><p>0D / ANNOUNCE!!</p><h2>ANNOUNCEMENTS FROM MEH</h2><span>offocial</span></div>
 <div class="announce-layout">
 <section class="announce-admin">
-<div class="announce-auth"><button id="announce-signin" type="button">OWNER SIGN IN</button><button id="announce-signout" type="button" hidden>SIGN OUT</button><p id="announce-auth-status">viewing as a normie</p></div>
+<div class="announce-auth"><button id="announce-signin" type="button">SIGN IN / GET USER CODE</button><button id="announce-signout" type="button" hidden>SIGN OUT</button><p id="announce-auth-status">future admins sign in here to get their code</p></div>
 <div id="announce-setup" hidden><p>YOUR USER CODE</p><code id="announce-uid"></code><button id="announce-copy-uid" type="button">COPY CODE</button></div>
 <section id="admin-panel" class="admin-panel" hidden><h3>ADMIN CREATURES</h3><form id="admin-add-form"><label for="admin-uid">USER CODE</label><input id="admin-uid" required placeholder="paste their Firebase UID"><label for="admin-name">DISPLAY NAME</label><input id="admin-name" maxlength="30" required placeholder="their admin name"><button type="submit">ADD ADMIN →</button></form><p id="admin-status"></p><div id="admin-list"></div></section>
 <form id="announce-form" hidden><label for="announce-title">TITLE</label><input id="announce-title" maxlength="120" required placeholder="important goober news"><label for="announce-body">MESSAGE</label><textarea id="announce-body" maxlength="2000" required placeholder="type announcement... :D"></textarea><div id="owner-announce-tools"><label for="announce-image">IMAGE (OPTIONAL)</label><input id="announce-image" type="file" accept="image/png,image/jpeg,image/webp"><label class="poll-switch"><input id="announce-add-poll" type="checkbox"> ADD A VOTE THING</label><div id="announce-poll-fields" hidden><label for="announce-poll-question">QUESTION</label><input id="announce-poll-question" maxlength="150" placeholder="which creature wins"><label>CHOICES (2–4)</label><input class="poll-option" maxlength="80" placeholder="choice 1"><input class="poll-option" maxlength="80" placeholder="choice 2"><input class="poll-option" maxlength="80" placeholder="choice 3 (optional)"><input class="poll-option" maxlength="80" placeholder="choice 4 (optional)"></div></div><button type="submit">ANNOUNCE →</button><p id="announce-form-status"></p></form>
@@ -250,7 +250,7 @@
 </section>
 </main>
 <section id="toast-stack" class="toast-stack" aria-live="polite" aria-label="Site notifications"></section>
-<script src="app.js?v=13">
+<script src="app.js?v=14">
 </script>
 </body>
 </html>
