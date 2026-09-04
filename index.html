@@ -6,7 +6,7 @@
 <title>0D</title>
 <meta name="description" content="0D — the GooberNet game pile.">
 <link rel="icon" type="image/png" href="favicon-v2.png?v=1">
-<link rel="stylesheet" href="style.css?v=14">
+<link rel="stylesheet" href="style.css?v=15">
 </head>
 <body>
 <div class="scan">
@@ -16,8 +16,8 @@
 <nav>
 <button data-page="games">
 <span>〘🎮〙</span>GAMES!!</button>
-<button data-page="music">
-<span>〘♫〙</span>MUSIC!!</button>
+<button data-page="chat">
+<span>〘☏〙</span>GOOBERCHAT!!</button>
 <button data-page="lab">
 <span>〘⌘〙</span>HTML LAB!!</button>
 <button data-page="announce">
@@ -27,7 +27,7 @@
 <button id="panic">
 <span>〘!〙</span>PANIC BUTTON!!</button>
 <button data-page="updates">
-<span>〘↻〙</span>UPDATE!!</button>
+<span>〘↻〙</span>GAME HISTORY!!</button>
 </nav>
 <section class="mini-player" aria-label="Temporary music player">
 <canvas id="visualizer" width="300" height="86" aria-label="Audio visualizer">
@@ -93,23 +93,20 @@
 <div id="game-list">
 </div>
 </section>
-<section id="music" class="page" hidden>
-<div class="page-head">
-<p>0D / MUSIC!!</p>
-<h2>STOMACH BOOK AREA</h2>
-<span>the site has music now &gt;w&lt;</span>
-</div>
-<div class="music-grid">
-<article>
-<h3>STOMACH BOOK</h3>
-<iframe data-testid="embed-iframe" src="https://open.spotify.com/embed/album/6Vbtpo67ePu1IS9hZf2xOY?utm_source=generator" width="100%" height="352" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="STOMACH BOOK album on Spotify">
-</iframe>
-</article>
-<article>
-<h3>SOPHOMORE SLUMP CALLITHUMP</h3>
-<iframe data-testid="embed-iframe" src="https://open.spotify.com/embed/album/6poivi23IEakYWrDe03pVX?utm_source=generator" width="100%" height="352" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="SOPHOMORE SLUMP CALLITHUMP album on Spotify">
-</iframe>
-</article>
+<section id="chat" class="page" hidden>
+<div class="page-head"><p>0D / GOOBERCHAT!!</p><h2>THE GOOBER ROOM</h2><span>pick a name. say words. incredible technology.</span></div>
+<div class="chat-shell">
+<section id="chat-gate" class="chat-gate">
+<form id="chat-join-form"><label for="chat-name">YOUR NAME</label><input id="chat-name" maxlength="24" required autocomplete="nickname" placeholder="mysterious creature"><button type="submit">JOIN ROOM →</button></form>
+<div class="chat-owner-entry"><span id="chat-owner-status">not in owner mode</span><button id="chat-owner-signin" type="button">OWNER SIGN IN</button></div>
+<p id="chat-join-status"></p>
+</section>
+<section id="chat-room" hidden>
+<div class="chat-room-head"><b id="chat-who"></b><button id="chat-leave" type="button">LEAVE ROOM</button></div>
+<div id="chat-messages" class="chat-messages" aria-live="polite"><p class="chat-empty">listening for goobers...</p></div>
+<form id="chat-send-form"><label class="sr-only" for="chat-message">Message</label><input id="chat-message" maxlength="500" required autocomplete="off" placeholder="say something..."><button type="submit">SEND →</button></form>
+<p id="chat-send-status"></p>
+</section>
 </div>
 </section>
 <section id="faq" class="page small-page" hidden>
@@ -150,7 +147,7 @@
 <section id="updates" class="page" hidden>
 <div class="page-head">
 <p>0D / HISTORY!!</p>
-<h2>UPDATES</h2>
+<h2>GAME HISTORY</h2>
 <span>site lore from memory</span>
 </div>
 <div class="updates">
@@ -250,7 +247,7 @@
 <p class="frame-note">meow</p>
 </section>
 </main>
-<script src="app.js?v=9">
+<script src="app.js?v=10">
 </script>
 </body>
 </html>
