@@ -6,9 +6,10 @@
 <title>0D</title>
 <meta name="description" content="0D — the GooberNet game pile.">
 <link rel="icon" type="image/png" href="favicon-v2.png?v=1">
-<link rel="stylesheet" href="style.css?v=18">
+<link rel="stylesheet" href="style.css?v=19">
 </head>
 <body>
+<section id="important-banner" class="important-banner" hidden><button id="important-open" type="button"><b>IMPORTANT UPDATE</b><strong id="important-title"></strong><span id="important-text"></span></button><button id="important-dismiss" type="button" aria-label="Dismiss important update">×</button></section>
 <div class="scan">
 </div>
 <aside>
@@ -96,17 +97,14 @@
 </section>
 <section id="chat" class="page" hidden>
 <div class="page-head"><p>0D / GOOBERCHAT!!</p><h2>THE GOOBER ROOM</h2><span>name yourself and say stuff!!!!!!!!! woooohoooo!!</span></div>
-<div class="chat-shell">
+<div class="chat-shell chat-v2">
 <section id="chat-gate" class="chat-gate">
-<form id="chat-join-form"><label for="chat-name">YOUR NAME</label><input id="chat-name" maxlength="30" required autocomplete="nickname" placeholder="mysterious creature"><button type="submit">JOIN ROOM →</button></form>
+<form id="chat-join-form"><label for="chat-name">YOUR NAME</label><input id="chat-name" maxlength="30" required autocomplete="nickname" placeholder="mysterious creature"><label for="chat-color">NAME COLOR</label><input id="chat-color" type="color" value="#ffd2d7"><button type="submit">JOIN ROOM →</button></form>
 <div class="chat-owner-entry"><span id="chat-owner-status">not in owner mode</span><button id="chat-owner-signin" type="button">OWNER SIGN IN</button></div>
 <p id="chat-join-status"></p>
 </section>
 <section id="chat-room" hidden>
-<div class="chat-room-head"><b id="chat-who"></b><button id="chat-leave" type="button">LEAVE ROOM</button></div>
-<div id="chat-messages" class="chat-messages" aria-live="polite"><p class="chat-empty">listening for others...</p></div>
-<form id="chat-send-form"><label class="sr-only" for="chat-message">Message</label><input id="chat-message" maxlength="5000" required autocomplete="off" placeholder="say something..."><button type="submit">SEND →</button></form>
-<p id="chat-send-status"></p>
+<div class="chat-v2-grid"><nav class="room-list" aria-label="Chat rooms"><b>ROOMS</b><button class="room-button active" data-room="general" type="button"># GENERAL</button><button class="room-button" data-room="games" type="button"># GAMES</button><button class="room-button" data-room="random" type="button"># RANDOM</button><button id="chat-leave" type="button">LEAVE CHAT</button></nav><section class="chat-main"><div class="chat-room-head"><div><b id="chat-room-name"># GENERAL</b><span id="chat-who"></span></div><button id="chat-load-older" type="button">LOAD OLDER</button></div><div id="chat-pins" class="chat-pins" hidden></div><div id="chat-messages" class="chat-messages" aria-live="polite"><p class="chat-empty">listening for others...</p></div><div id="chat-reply-draft" class="chat-reply-draft" hidden><span></span><button type="button">CANCEL</button></div><form id="chat-send-form"><label class="sr-only" for="chat-message">Message</label><input id="chat-message" maxlength="5000" required autocomplete="off" placeholder="say something... @someone"><button type="submit">SEND →</button></form><p id="chat-send-status"></p></section><section class="online-panel"><b>ONLINE NOW</b><div id="online-list"><span>detecting creatures...</span></div></section></div>
 </section>
 </div>
 </section>
@@ -141,7 +139,8 @@
 <div class="announce-auth"><button id="announce-signin" type="button">SIGN IN / GET USER CODE</button><button id="announce-signout" type="button" hidden>SIGN OUT</button><p id="announce-auth-status">future admins sign in here to get their code</p></div>
 <div id="announce-setup" hidden><p>YOUR USER CODE</p><code id="announce-uid"></code><button id="announce-copy-uid" type="button">COPY CODE</button></div>
 <section id="admin-panel" class="admin-panel" hidden><h3>ADMIN CREATURES</h3><form id="admin-add-form"><label for="admin-uid">USER CODE</label><input id="admin-uid" required placeholder="paste their Firebase UID"><label for="admin-name">DISPLAY NAME</label><input id="admin-name" maxlength="30" required placeholder="their admin name"><button type="submit">ADD ADMIN →</button></form><p id="admin-status"></p><div id="admin-list"></div></section>
-<form id="announce-form" hidden><label for="announce-title">TITLE</label><input id="announce-title" maxlength="120" required placeholder="important goober news"><label for="announce-body">MESSAGE</label><textarea id="announce-body" maxlength="2000" required placeholder="type announcement... :D"></textarea><div id="owner-announce-tools"><label for="announce-image">IMAGE (OPTIONAL)</label><input id="announce-image" type="file" accept="image/png,image/jpeg,image/webp"><label class="poll-switch"><input id="announce-add-poll" type="checkbox"> ADD A VOTE THING</label><div id="announce-poll-fields" hidden><label for="announce-poll-question">QUESTION</label><input id="announce-poll-question" maxlength="150" placeholder="which creature wins"><label>CHOICES (2–4)</label><input class="poll-option" maxlength="80" placeholder="choice 1"><input class="poll-option" maxlength="80" placeholder="choice 2"><input class="poll-option" maxlength="80" placeholder="choice 3 (optional)"><input class="poll-option" maxlength="80" placeholder="choice 4 (optional)"></div></div><button type="submit">ANNOUNCE →</button><p id="announce-form-status"></p></form>
+<section id="owner-device-panel" class="owner-device-panel" hidden><h3>OWNER DEVICES</h3><p>approve a browser as full red owner mode</p><form id="owner-device-form"><label for="owner-device-uid">DEVICE CODE</label><input id="owner-device-uid" required placeholder="paste the Chromebook code"><label for="owner-device-name">DEVICE NAME</label><input id="owner-device-name" maxlength="30" required placeholder="school Chromebook"><button type="submit">APPROVE DEVICE →</button></form><p id="owner-device-status"></p><div id="owner-device-list"></div></section>
+<form id="announce-form" hidden><label for="announce-title">TITLE</label><input id="announce-title" maxlength="120" required placeholder="important goober news"><label for="announce-body">MESSAGE</label><textarea id="announce-body" maxlength="2000" required placeholder="type announcement... :D"></textarea><div id="owner-announce-tools"><label for="announce-image">IMAGE (OWNER ONLY)</label><input id="announce-image" type="file" accept="image/png,image/jpeg,image/webp"><label class="important-switch"><input id="announce-important" type="checkbox"> IMPORTANT UPDATE BANNER</label></div><label class="poll-switch"><input id="announce-add-poll" type="checkbox"> ADD A VOTE THING</label><div id="announce-poll-fields" hidden><label for="announce-poll-question">QUESTION</label><input id="announce-poll-question" maxlength="150" placeholder="which creature wins"><label>CHOICES (2–4)</label><input class="poll-option" maxlength="80" placeholder="choice 1"><input class="poll-option" maxlength="80" placeholder="choice 2"><input class="poll-option" maxlength="80" placeholder="choice 3 (optional)"><input class="poll-option" maxlength="80" placeholder="choice 4 (optional)"></div><button type="submit">ANNOUNCE →</button><p id="announce-form-status"></p></form>
 </section>
 <section id="announcement-list" class="announcement-list" aria-live="polite"><p class="announce-empty">checking...</p></section>
 </div>
@@ -246,11 +245,12 @@
 </div>
 <iframe id="gameframe" title="Game" allow="fullscreen; autoplay; gamepad" referrerpolicy="no-referrer">
 </iframe>
-<p class="frame-note">whatcha playing</p>
+<p class="frame-note">meow</p>
 </section>
 </main>
 <section id="toast-stack" class="toast-stack" aria-live="polite" aria-label="Site notifications"></section>
-<script src="app.js?v=14">
+<script src="app.js?v=15">
 </script>
+<script src="firebase-v2.js?v=2"></script>
 </body>
 </html>
