@@ -6,10 +6,10 @@
 <title>0D</title>
 <meta name="description" content="0D — the GooberNet game pile.">
 <link rel="icon" type="image/png" href="favicon-v2.png?v=1">
-<link rel="stylesheet" href="style.css?v=20">
+<link rel="stylesheet" href="style.css?v=21">
 </head>
 <body>
-<section id="important-banner" class="important-banner" hidden><button id="important-open" type="button"><b>IMPORTANT UPDATE</b><strong id="important-title"></strong><span id="important-text"></span></button><button id="important-dismiss" type="button" aria-label="Dismiss important update">×</button></section>
+<section id="important-banner" class="important-banner" hidden><button id="important-open" type="button"><b>IMPORTANT UPDATE · 30 SECOND TRANSMISSION</b><strong id="important-title"></strong><small id="important-author"></small><span id="important-text"></span></button><button id="important-dismiss" type="button" aria-label="Dismiss important update">×</button></section>
 <div class="scan">
 </div>
 <aside>
@@ -23,6 +23,8 @@
 <span>〘⌘〙</span>HTML LAB!!</button>
 <button data-page="announce">
 <span>〘📢〙</span>ANNOUNCE!!</button>
+<button data-page="settings">
+<span>〘⚙〙</span>SETTINGS!!</button>
 <button data-page="rate">
 <span>〘★〙</span>Rate me!!</button>
 <button id="panic">
@@ -142,7 +144,7 @@
 <div id="announce-setup" hidden><p>YOUR USER CODE</p><code id="announce-uid"></code><button id="announce-copy-uid" type="button">COPY CODE</button></div>
 <section id="admin-panel" class="admin-panel" hidden><h3>ADMIN CREATURES</h3><form id="admin-add-form"><label for="admin-uid">USER CODE</label><input id="admin-uid" required placeholder="paste their Firebase UID"><label for="admin-name">DISPLAY NAME</label><input id="admin-name" maxlength="30" required placeholder="their admin name"><button type="submit">ADD ADMIN →</button></form><p id="admin-status"></p><div id="admin-list"></div></section>
 <section id="owner-device-panel" class="owner-device-panel" hidden><h3>OWNER DEVICES</h3><p>approve a browser as full red owner mode</p><form id="owner-device-form"><label for="owner-device-uid">DEVICE CODE</label><input id="owner-device-uid" required placeholder="paste the Chromebook code"><label for="owner-device-name">DEVICE NAME</label><input id="owner-device-name" maxlength="30" required placeholder="school Chromebook"><button type="submit">APPROVE DEVICE →</button></form><p id="owner-device-status"></p><div id="owner-device-list"></div></section>
-<form id="announce-form" hidden><label for="announce-title">TITLE</label><input id="announce-title" maxlength="120" required placeholder="important goober news"><label for="announce-body">MESSAGE</label><textarea id="announce-body" maxlength="2000" required placeholder="type announcement... :D"></textarea><div id="owner-announce-tools"><label for="announce-image">IMAGE (OWNER ONLY)</label><input id="announce-image" type="file" accept="image/png,image/jpeg,image/webp"><label class="important-switch"><input id="announce-important" type="checkbox"> IMPORTANT UPDATE BANNER</label></div><label class="poll-switch"><input id="announce-add-poll" type="checkbox"> ADD A VOTE THING</label><div id="announce-poll-fields" hidden><label for="announce-poll-question">QUESTION</label><input id="announce-poll-question" maxlength="150" placeholder="which creature wins"><label>CHOICES (2–4)</label><input class="poll-option" maxlength="80" placeholder="choice 1"><input class="poll-option" maxlength="80" placeholder="choice 2"><input class="poll-option" maxlength="80" placeholder="choice 3 (optional)"><input class="poll-option" maxlength="80" placeholder="choice 4 (optional)"></div><button type="submit">ANNOUNCE →</button><p id="announce-form-status"></p></form>
+<form id="announce-form" hidden><label for="announce-author">YOUR ANNOUNCEMENT NAME</label><input id="announce-author" maxlength="30" required placeholder="who is yelling"><label for="announce-title">TITLE</label><input id="announce-title" maxlength="120" required placeholder="important goober news"><label for="announce-body">MESSAGE</label><textarea id="announce-body" maxlength="2000" required placeholder="type announcement... :D"></textarea><div id="owner-announce-tools"><label for="announce-image">IMAGE (OWNER ONLY)</label><input id="announce-image" type="file" accept="image/png,image/jpeg,image/webp"><label class="important-switch"><input id="announce-important" type="checkbox"> IMPORTANT UPDATE BANNER</label></div><label class="poll-switch"><input id="announce-add-poll" type="checkbox"> ADD A VOTE THING</label><div id="announce-poll-fields" hidden><label for="announce-poll-question">QUESTION</label><input id="announce-poll-question" maxlength="150" placeholder="which creature wins"><label>CHOICES (2–4)</label><input class="poll-option" maxlength="80" placeholder="choice 1"><input class="poll-option" maxlength="80" placeholder="choice 2"><input class="poll-option" maxlength="80" placeholder="choice 3 (optional)"><input class="poll-option" maxlength="80" placeholder="choice 4 (optional)"></div><button type="submit">ANNOUNCE →</button><p id="announce-form-status"></p></form>
 </section>
 <section id="announcement-list" class="announcement-list" aria-live="polite"><p class="announce-empty">checking...</p></section>
 </div>
@@ -251,8 +253,8 @@
 </section>
 </main>
 <section id="toast-stack" class="toast-stack" aria-live="polite" aria-label="Site notifications"></section>
-<script src="app.js?v=16">
+<script src="app.js?v=17">
 </script>
-<script src="firebase-v2.js?v=2"></script>
+<script src="firebase-v2.js?v=3"></script>
 </body>
 </html>
