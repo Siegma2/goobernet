@@ -94,17 +94,17 @@
 </div>
 </section>
 <section id="chat" class="page" hidden>
-<div class="page-head"><p>0D / GOOBERCHAT!!</p><h2>THE GOOBER ROOM</h2><span>pick a name. say words. incredible technology.</span></div>
+<div class="page-head"><p>0D / GOOBERCHAT!!</p><h2>THE GOOBER ROOM</h2><span>name yourself and say stuff!!!!!!!!! woooohoooo!!</span></div>
 <div class="chat-shell">
 <section id="chat-gate" class="chat-gate">
-<form id="chat-join-form"><label for="chat-name">YOUR NAME</label><input id="chat-name" maxlength="24" required autocomplete="nickname" placeholder="mysterious creature"><button type="submit">JOIN ROOM →</button></form>
+<form id="chat-join-form"><label for="chat-name">YOUR NAME</label><input id="chat-name" maxlength="30" required autocomplete="nickname" placeholder="mysterious creature"><button type="submit">JOIN ROOM →</button></form>
 <div class="chat-owner-entry"><span id="chat-owner-status">not in owner mode</span><button id="chat-owner-signin" type="button">OWNER SIGN IN</button></div>
 <p id="chat-join-status"></p>
 </section>
 <section id="chat-room" hidden>
 <div class="chat-room-head"><b id="chat-who"></b><button id="chat-leave" type="button">LEAVE ROOM</button></div>
-<div id="chat-messages" class="chat-messages" aria-live="polite"><p class="chat-empty">listening for goobers...</p></div>
-<form id="chat-send-form"><label class="sr-only" for="chat-message">Message</label><input id="chat-message" maxlength="500" required autocomplete="off" placeholder="say something..."><button type="submit">SEND →</button></form>
+<div id="chat-messages" class="chat-messages" aria-live="polite"><p class="chat-empty">listening for others...</p></div>
+<form id="chat-send-form"><label class="sr-only" for="chat-message">Message</label><input id="chat-message" maxlength="5000" required autocomplete="off" placeholder="say something..."><button type="submit">SEND →</button></form>
 <p id="chat-send-status"></p>
 </section>
 </div>
@@ -134,14 +134,14 @@
 </div>
 </section>
 <section id="announce" class="page" hidden>
-<div class="page-head"><p>0D / ANNOUNCE!!</p><h2>SITE TRANSMISSIONS</h2><span>official goobernet noises 📢</span></div>
+<div class="page-head"><p>0D / ANNOUNCE!!</p><h2>ANNOUNCEMENTS FROM MEH</h2><span>offocial</span></div>
 <div class="announce-layout">
 <section class="announce-admin">
-<div class="announce-auth"><button id="announce-signin" type="button">OWNER SIGN IN</button><button id="announce-signout" type="button" hidden>SIGN OUT</button><p id="announce-auth-status">viewing as a creature</p></div>
+<div class="announce-auth"><button id="announce-signin" type="button">OWNER SIGN IN</button><button id="announce-signout" type="button" hidden>SIGN OUT</button><p id="announce-auth-status">viewing as a normie</p></div>
 <div id="announce-setup" hidden><p>OWNER SETUP CODE</p><code id="announce-uid"></code><button id="announce-copy-uid" type="button">COPY CODE</button></div>
-<form id="announce-form" hidden><label for="announce-title">TITLE</label><input id="announce-title" maxlength="120" required placeholder="important goober news"><label for="announce-body">MESSAGE</label><textarea id="announce-body" maxlength="2000" required placeholder="type announcement... :D"></textarea><button type="submit">TRANSMIT →</button><p id="announce-form-status"></p></form>
+<form id="announce-form" hidden><label for="announce-title">TITLE</label><input id="announce-title" maxlength="120" required placeholder="important goober news"><label for="announce-body">MESSAGE</label><textarea id="announce-body" maxlength="2000" required placeholder="type announcement... :D"></textarea><button type="submit">ANNOUNCE →</button><p id="announce-form-status"></p></form>
 </section>
-<section id="announcement-list" class="announcement-list" aria-live="polite"><p class="announce-empty">checking the void...</p></section>
+<section id="announcement-list" class="announcement-list" aria-live="polite"><p class="announce-empty">checking...</p></section>
 </div>
 </section>
 <section id="updates" class="page" hidden>
