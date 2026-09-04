@@ -6,7 +6,7 @@
 <title>0D</title>
 <meta name="description" content="0D — the GooberNet game pile.">
 <link rel="icon" type="image/png" href="favicon-v2.png?v=1">
-<link rel="stylesheet" href="style.css?v=22">
+<link rel="stylesheet" href="style.css?v=21">
 </head>
 <body>
 <section id="important-banner" class="important-banner" hidden><button id="important-open" type="button"><b>IMPORTANT UPDATE · 30 SECOND TRANSMISSION</b><strong id="important-title"></strong><small id="important-author"></small><span id="important-text"></span></button><button id="important-dismiss" type="button" aria-label="Dismiss important update">×</button></section>
@@ -25,9 +25,14 @@
 <span>〘📢〙</span>ANNOUNCE!!</button>
 <button data-page="settings">
 <span>〘⚙〙</span>SETTINGS!!</button>
+<button data-page="rate">
+<span>〘★〙</span>Rate me!!</button>
+<button id="panic">
+<span>〘!〙</span>PANIC BUTTON!!</button>
 <button data-page="updates">
 <span>〘↻〙</span>GAME HISTORY!!</button>
 </nav>
+<button id="site-notifications" class="notification-toggle" type="button" aria-pressed="false">NOTIFICATIONS: OFF</button>
 <section class="mini-player" aria-label="Temporary music player">
 <canvas id="visualizer" width="300" height="86" aria-label="Audio visualizer">
 </canvas>
@@ -129,15 +134,6 @@
 <h2>rate the site!!</h2>
 <p>5 stars or DEATH.</p>
 <a class="form-link" href="https://forms.gle/gCJr1Ji4JHdZvcH47" target="_blank" rel="noreferrer">OPEN RATE FORM ↗</a>
-</div>
-</section>
-<section id="settings" class="page" hidden>
-<div class="page-head"><p>0D / SETTINGS!!</p><h2>CONTROL PANEL</h2><span>buttons and creature paperwork</span></div>
-<div class="settings-grid">
-<section class="settings-card"><h3>QUICK BUTTONS</h3><button id="settings-rate" type="button">★ RATE ME!!</button><button id="settings-panic" type="button">! PANIC BUTTON!!</button><button id="settings-notifications" type="button">NOTIFICATIONS: ON</button></section>
-<section id="settings-account" class="settings-card"><h3>ACCOUNT + CODE</h3><p>Your permanent creature code lives here. Staff can use it to add or ban you.</p></section>
-<section id="settings-identity" class="settings-card" hidden><h3>VISIBLE TITLE</h3><p>Hide your staff title or wear a lower one. Your actual powers stay the same.</p><label for="display-role">SHOW ME AS</label><select id="display-role"></select></section>
-<section id="settings-staff" class="settings-card settings-staff"><h3>STAFF MANAGEMENT</h3><section id="ban-panel" hidden><h3>SITE BANS</h3><form id="ban-add-form"><label for="ban-uid">CREATURE CODE</label><input id="ban-uid" required placeholder="paste their full code"><label for="ban-reason">REASON</label><input id="ban-reason" maxlength="160" required placeholder="why they got launched"><button type="submit">BAN CREATURE →</button></form><p id="ban-status"></p><div id="ban-list"></div></section></section>
 </div>
 </section>
 <section id="announce" class="page" hidden>
@@ -257,9 +253,8 @@
 </section>
 </main>
 <section id="toast-stack" class="toast-stack" aria-live="polite" aria-label="Site notifications"></section>
-<section id="site-ban-screen" class="site-ban-screen" hidden><div><b>ACCESS BONKED</b><h2>YOU ARE BANNED FROM 0D</h2><p id="site-ban-reason"></p><code id="site-ban-code"></code></div></section>
-<script src="app.js?v=18">
+<script src="app.js?v=17">
 </script>
-<script src="firebase-v2.js?v=4"></script>
+<script src="firebase-v2.js?v=3"></script>
 </body>
 </html>
