@@ -138,6 +138,7 @@
 <section id="settings-account" class="settings-card"><h3>ACCOUNT + CODE</h3><p>Sign in or copy your creature code here.</p></section>
 <section id="settings-identity" class="settings-card"><h3>CHAT LOOK</h3><p>Your name color follows you into GooberChat. Staff can hide or lower their visible title without losing powers.</p><div id="settings-color-slot"></div><label for="display-role">SHOW MY TITLE AS</label><select id="display-role"><option value="user">NORMAL CREATURE</option></select></section>
 <section id="settings-staff" class="settings-card settings-staff"><h3>STAFF MANAGEMENT</h3></section>
+<section id="ban-panel" class="settings-card settings-staff ban-panel" hidden><h3>ACCESS BANS</h3><p>Use the creature code already shown beside their chat name. Channel bans lock one room; Games bans bounce them out of the entire Games tab.</p><form id="ban-form"><label for="ban-user-code">USER CODE</label><input id="ban-user-code" required placeholder="paste their creature code"><label for="ban-type">BAN TYPE</label><select id="ban-type"><option value="channel">CHAT CHANNEL</option><option value="games">ENTIRE GAMES TAB</option></select><div id="ban-channel-field"><label for="ban-channel">CHANNEL</label><select id="ban-channel"><option value="general"># GENERAL</option><option value="games"># GAMES</option><option value="random"># RANDOM</option></select></div><label for="ban-reason">REASON</label><input id="ban-reason" maxlength="200" required placeholder="why they got bonked"><button type="submit">BAN ACCESS →</button></form><p id="ban-status"></p><div id="ban-list"></div></section>
 </div>
 </section>
 <section id="announce" class="page" hidden>
@@ -259,6 +260,6 @@
 <section id="toast-stack" class="toast-stack" aria-live="polite" aria-label="Site notifications"></section>
 <script src="app.js?v=18">
 </script>
-<script src="firebase-v2.js?v=4"></script>
+<script src="firebase-v2.js?v=5"></script>
 </body>
 </html>
