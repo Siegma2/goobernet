@@ -314,22 +314,4 @@ html[data-theme="white"] .scan{opacity:.035}html[data-theme="black"] .backdrop{f
   display:block;
   width:100%;
   max-width:100%;
-}
-.guns-logo-link {
-  display:block;
-  width:100%;
-  margin:14px 0;
-  text-align:center;
-}
-.guns-logo-link img {
-  width:100%
-  max-width:140px;
-  height:auto;
-  display:block;
-  margin:0 auto;
-  transition:transform 0.15s ease, filter 0.15s ease'
-}
-.guns-lol-link;hover img{
-  transform:scale(1.06);
-  filter:brightness(1.2);
-}
+  
