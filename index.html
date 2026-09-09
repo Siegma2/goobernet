@@ -9,7 +9,7 @@
 <meta property="og:image" content="https://static.wikitide.net/gracewiki/5/59/Vision_Icon.png">
 <meta property="og:type" content="website">
 <link rel="icon" type="image/png" href="favicon-v2.png?v=1">
-<link rel="stylesheet" href="style.css?v=24">
+<link rel="stylesheet" href="style.css?v=25">
 </head>
 <body>
 <section id="important-banner" class="important-banner" hidden><button id="important-open" type="button"><b>IMPORTANT UPDATE · ANNOUNCEMENT</b><strong id="important-title"></strong><small id="important-author"></small><span id="important-text"></span></button><button id="important-dismiss" type="button" aria-label="Dismiss important update">×</button></section>
@@ -21,11 +21,11 @@
 <button data-page="games">
 <span>〘🎮〙</span>GAMES!!</button>
 <button data-page="chat">
-<span>〘☏〙</span>GOOBERCHAT!!</button>
+<span>〘☏〙</span>GOOBERCHAT!! <b id="chat-unread" class="unread-count" hidden>0</b></button>
 <button data-page="lab">
 <span>〘⌘〙</span>HTML LAB!!</button>
 <button data-page="announce">
-<span>〘📢〙</span>ANNOUNCE!!</button>
+<span>〘📢〙</span>ANNOUNCE!! <b id="announce-unread" class="unread-count" hidden>0</b></button>
 <button data-page="settings">
 <span>〘⚙〙</span>SETTINGS!!</button>
 <button data-page="updates">
@@ -100,7 +100,7 @@
 <p id="chat-join-status"></p>
 </section>
 <section id="chat-room" hidden>
-<div class="chat-v2-grid"><nav class="room-list" aria-label="Chat rooms"><b>ROOMS</b><button class="room-button active" data-room="general" type="button"># GENERAL</button><button class="room-button" data-room="games" type="button"># GAMES</button><button class="room-button" data-room="random" type="button"># RANDOM</button><button id="chat-leave" type="button">LEAVE CHAT</button></nav><section class="chat-main"><div class="chat-room-head"><div><b id="chat-room-name"># GENERAL</b><span id="chat-who"></span></div><button id="chat-load-older" type="button">LOAD OLDER</button></div><div id="chat-pins" class="chat-pins" hidden></div><div id="chat-messages" class="chat-messages" aria-live="polite"><p class="chat-empty">listening for others...</p></div><div id="chat-reply-draft" class="chat-reply-draft" hidden><span></span><button type="button">CANCEL</button></div><form id="chat-send-form"><label class="sr-only" for="chat-message">Message</label><input id="chat-message" maxlength="5000" required autocomplete="off" placeholder="say something... @someone"><button type="submit">SEND →</button></form><p id="chat-send-status"></p></section><section class="online-panel"><b>ONLINE NOW</b><div id="online-list"><span>detecting creatures...</span></div></section></div>
+<div class="chat-v2-grid"><nav class="room-list" aria-label="Chat rooms"><b>ROOMS</b><button class="room-button active" data-room="general" type="button"># GENERAL <b class="room-unread" data-unread-room="general" hidden>0</b></button><button class="room-button" data-room="games" type="button"># GAMES <b class="room-unread" data-unread-room="games" hidden>0</b></button><button class="room-button" data-room="random" type="button"># RANDOM <b class="room-unread" data-unread-room="random" hidden>0</b></button><button id="chat-leave" type="button">LEAVE CHAT</button></nav><section class="chat-main"><div class="chat-room-head"><div><b id="chat-room-name"># GENERAL</b><span id="chat-who"></span></div><button id="chat-load-older" type="button">LOAD OLDER</button></div><div id="chat-pins" class="chat-pins" hidden></div><div id="chat-messages" class="chat-messages" aria-live="polite"><p class="chat-empty">listening for others...</p></div><div id="chat-reply-draft" class="chat-reply-draft" hidden><span></span><button type="button">CANCEL</button></div><form id="chat-send-form"><label class="sr-only" for="chat-message">Message</label><input id="chat-message" maxlength="5000" required autocomplete="off" placeholder="say something... @someone"><button type="submit">SEND →</button></form><p id="chat-send-status"></p></section><section class="online-panel"><b>ONLINE NOW</b><div id="online-list"><span>detecting creatures...</span></div></section></div>
 </section>
 </div>
 </section>
@@ -148,9 +148,10 @@ href="https://rosefield-sciences.bandcamp.com/album/roblox-grace-ost-garden-trax
   </iframe>
 </section>
 <section id="settings-account" class="settings-card"><h3>ACCOUNT + CODE</h3><p>Sign in or copy your creature code here.</p></section>
-<section id="settings-identity" class="settings-card"><h3>CHAT LOOK</h3><p>Your name color follows you into GooberChat. Staff can hide or lower their visible title without losing powers.</p><div id="settings-color-slot"></div><label for="display-role">SHOW MY TITLE AS</label><select id="display-role"><option value="user">NORMAL CREATURE</option></select></section>
+<section id="settings-identity" class="settings-card"><h3>CHAT LOOK</h3><p>Build your chat creature. Changes apply to new messages and your online card.</p><div id="settings-color-slot"></div><div class="chat-look-grid"><label>PROFILE PICTURE<select id="chat-avatar"><option value="🌙">🌙 MOON</option><option value="⭐">⭐ STAR</option><option value="🐾">🐾 PAW</option><option value="👁️">👁️ EYE</option><option value="🍰">🍰 CAKE</option><option value="💿">💿 DISC</option></select></label><label>BUBBLE COLOR<input id="chat-bubble-color" type="color" value="#17090b"></label><label>BORDER COLOR<input id="chat-border-color" type="color" value="#8d313b"></label><label>NAME FONT<select id="chat-font"><option value="mono">TERMINAL</option><option value="round">ROUND</option><option value="serif">DRAMATIC</option></select></label><label class="wide">CUSTOM STATUS<input id="chat-status" maxlength="30" placeholder="doing creature activities"></label><label>CHAT SIZE<select id="chat-density"><option value="normal">NORMAL</option><option value="compact">COMPACT</option></select></label><label>SHOW MY TITLE AS<select id="display-role"><option value="user">NORMAL CREATURE</option></select></label></div></section>
 <section id="settings-staff" class="settings-card settings-staff"><h3>STAFF MANAGEMENT</h3></section>
 <section id="ban-panel" class="settings-card settings-staff ban-panel" hidden><h3>ACCESS BANS</h3><p>Use the creature code already shown beside their chat name. Channel bans lock one room; Games bans bounce them out of the entire Games tab.</p><form id="ban-form"><label for="ban-user-code">USER CODE</label><input id="ban-user-code" required placeholder="paste their creature code"><label for="ban-type">BAN TYPE</label><select id="ban-type"><option value="channel">CHAT CHANNEL</option><option value="games">ENTIRE GAMES TAB</option></select><div id="ban-channel-field"><label for="ban-channel">CHANNEL</label><select id="ban-channel"><option value="general"># GENERAL</option><option value="games"># GAMES</option><option value="random"># RANDOM</option></select></div><label for="ban-reason">REASON</label><input id="ban-reason" maxlength="200" required placeholder="why they got bonked"><button type="submit">BAN ACCESS →</button></form><p id="ban-status"></p><div id="ban-list"></div></section>
+<section id="mod-log-panel" class="settings-card settings-staff mod-log-panel" hidden><h3>MOD LOG</h3><p>Search by the copyable code beside a chat name. Deleted messages remain here for staff review.</p><form id="mod-log-form"><input id="mod-log-code" placeholder="paste creature code"><button type="submit">SEARCH LOG →</button></form><button id="mod-log-clear" type="button">SHOW ALL RECENT</button><div id="mod-log-list"><p>waiting for staff mode...</p></div></section>
 </div>
 </section>
 <section id="announce" class="page" hidden>
@@ -272,6 +273,6 @@ href="https://rosefield-sciences.bandcamp.com/album/roblox-grace-ost-garden-trax
 <section id="toast-stack" class="toast-stack" aria-live="polite" aria-label="Site notifications"></section>
 <script src="app.js?v=21">
 </script>
-<script src="firebase-v2.js?v=5"></script>
+<script src="firebase-v2.js?v=6"></script>
 </body>
 </html>
