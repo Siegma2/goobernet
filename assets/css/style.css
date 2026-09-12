@@ -1,5 +1,6 @@
 :root{--ink:#16090b;--wine:#3b050b;--red:#790f1d;--hot:#d94b5c;--pale:#ff9aa6;--paper:#f3d6d8;--white:#fff4f4;--line:#8d313b;--sidebar:184px}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{margin:0;background:#0d0607;color:var(--white);font-family:"Courier New",Courier,monospace;font-size:16px;min-height:100vh}
 button,input,a{font:inherit}
