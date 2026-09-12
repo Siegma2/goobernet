@@ -17,7 +17,7 @@ main{margin-left:var(--sidebar);min-height:100vh}
 .page[hidden]{display:none!important}
 #home{padding:0}
 .hero{position:relative;min-height:78vh;display:flex;align-items:center;justify-content:center;overflow:hidden;border-bottom:5px solid var(--hot);isolation:isolate}
-.backdrop{position:absolute;inset:-20px;z-index:-2;background:url('background.webp') center 34%/cover no-repeat;filter:saturate(.7) contrast(1.15) brightness(.42)}
+.backdrop{position:absolute;inset:-20px;z-index:-2;background:url('../images/backgrounds/background.webp') center 34%/cover no-repeat;filter:saturate(.7) contrast(1.15) brightness(.42)}
 .hero:after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at center,rgba(31,2,5,.14) 0 25%,rgba(14,3,5,.83) 90%),linear-gradient(90deg,rgba(22,2,5,.6),transparent 35% 65%,rgba(22,2,5,.6))}
 .hero-content{text-align:center;padding:64px 24px 32px;max-width:900px}
 .overline{display:inline-block;margin:0 0 8px;padding:5px 9px;background:#16070bcc;color:#f0abb3;border:1px solid #91414b;font-size:.75rem;letter-spacing:.14em}
@@ -136,14 +136,14 @@ aside nav button,aside nav button:nth-child(even){width:auto}
 }
 
 #games,#updates{background-color:#100507;background-repeat:no-repeat;background-size:cover;background-position:center;background-attachment:fixed}
-#games{background-image:linear-gradient(rgba(12,3,5,.38),rgba(20,3,6,.62)),url('games-background.jpg')}
-#updates{background-image:linear-gradient(rgba(12,3,5,.36),rgba(20,3,6,.6)),url('updates-background.jpg')}
+#games{background-image:linear-gradient(rgba(12,3,5,.38),rgba(20,3,6,.62)),url('../images/backgrounds/games-background.jpg')}
+#updates{background-image:linear-gradient(rgba(12,3,5,.36),rgba(20,3,6,.6)),url('../images/backgrounds/updates-background.jpg')}
 @media(max-width:720px){#games,#updates{background-attachment:scroll;background-position:center top}
 }
 
 #chat,#lab{background-color:#100507;background-repeat:no-repeat;background-size:cover;background-position:center;background-attachment:fixed}
-#chat{background-image:linear-gradient(rgba(12,3,5,.34),rgba(20,3,6,.6)),url('music-background.jpg')}
-#lab{background-image:linear-gradient(rgba(12,3,5,.3),rgba(20,3,6,.58)),url('lab-background.jpg')}
+#chat{background-image:linear-gradient(rgba(12,3,5,.34),rgba(20,3,6,.6)),url('../images/backgrounds/music-background.jpg')}
+#lab{background-image:linear-gradient(rgba(12,3,5,.3),rgba(20,3,6,.58)),url('../images/backgrounds/lab-background.jpg')}
 @media(max-width:720px){#chat,#lab{background-attachment:scroll;background-position:center top}
 }
 
@@ -304,8 +304,8 @@ html[data-theme] .game-row:nth-child(even),html[data-theme] .chat-message,html[d
 html[data-theme] .page-head h2,html[data-theme] .settings-card h3,html[data-theme] .home-note b,html[data-theme] .page-head p,html[data-theme] .game-tools b,html[data-theme] .play{color:var(--theme-accent);-webkit-text-stroke-color:var(--theme-accent)}
 html[data-theme] .page-head span,html[data-theme] .settings-card p,html[data-theme] .updates p,html[data-theme] .updates time,html[data-theme] .game-name small{color:var(--theme-muted)}
 html[data-theme="white"] .scan{opacity:.035}html[data-theme="black"] .backdrop{filter:grayscale(1) brightness(.13)}html[data-theme="white"] .backdrop{filter:grayscale(1) brightness(1.25);opacity:.28}
-html[data-theme="zen"] body{background-image:linear-gradient(rgba(18,4,45,.48),rgba(42,5,57,.58)),url('zen-background.gif');background-size:cover;background-position:center;background-attachment:fixed}
-html[data-theme="zen"] .backdrop{background-image:linear-gradient(rgba(39,8,76,.2),rgba(144,27,154,.25)),url('zen-background.gif');background-size:cover;background-position:center;filter:saturate(1.25) brightness(.85);opacity:.9}
+html[data-theme="zen"] body{background-image:linear-gradient(rgba(18,4,45,.48),rgba(42,5,57,.58)),url('../images/backgrounds/zen-background.gif');background-size:cover;background-position:center;background-attachment:fixed}
+html[data-theme="zen"] .backdrop{background-image:linear-gradient(rgba(39,8,76,.2),rgba(144,27,154,.25)),url('../images/backgrounds/zen-background.gif');background-size:cover;background-position:center;filter:saturate(1.25) brightness(.85);opacity:.9}
 html[data-theme="zen"] .scan{opacity:.1;mix-blend-mode:screen}
 html[data-theme="zen"] .hero-content h1,html[data-theme="zen"] .side-logo{color:#fff;text-shadow:4px 4px 0 #a022c2,-2px -2px 0 #ff8eeb}
 #settings-theme select{box-sizing:border-box;width:100%;min-height:44px;padding:9px;color:var(--theme-text,var(--white));background:var(--theme-surface-2,#080304);border:1px solid var(--theme-accent,var(--pale));font:inherit;font-weight:900}

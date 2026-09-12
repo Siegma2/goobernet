@@ -3,13 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>0D</title>
-<meta name="description" content="0D — the GooberNet game pile.">
-<link rel="icon" type="image/png" href="favicon-v2.png?v=1">
-<link rel="stylesheet" href="style.css?v=24">
+<title>DIMENSION 0</title>
+<meta property="og:title" content="0D">
+<meta property="og:description" content="0D is a place where u can chat and play games!!">
+<meta property="og:image" content="https://static.wikitide.net/gracewiki/5/59/Vision_Icon.png">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="assets/images/branding/favicon-v2.png?v=1">
+<link rel="stylesheet" href="assets/css/style.css?v=28">
 </head>
 <body>
-<section id="important-banner" class="important-banner" hidden><button id="important-open" type="button"><b>IMPORTANT UPDATE · 30 SECOND TRANSMISSION</b><strong id="important-title"></strong><small id="important-author"></small><span id="important-text"></span></button><button id="important-dismiss" type="button" aria-label="Dismiss important update">×</button></section>
+<section id="important-banner" class="important-banner" hidden><button id="important-open" type="button"><b>IMPORTANT UPDATE · ANNOUNCEMENT</b><strong id="important-title"></strong><small id="important-author"></small><span id="important-text"></span></button><button id="important-dismiss" type="button" aria-label="Dismiss important update">×</button></section>
 <div class="scan">
 </div>
 <aside>
@@ -18,30 +21,20 @@
 <button data-page="games">
 <span>〘🎮〙</span>GAMES!!</button>
 <button data-page="chat">
-<span>〘☏〙</span>GOOBERCHAT!!</button>
+<span>〘☏〙</span>GOOBERCHAT!! <b id="chat-unread" class="unread-count" hidden>0</b></button>
 <button data-page="lab">
 <span>〘⌘〙</span>HTML LAB!!</button>
 <button data-page="announce">
-<span>〘📢〙</span>ANNOUNCE!!</button>
+<span>〘📢〙</span>ANNOUNCE!! <b id="announce-unread" class="unread-count" hidden>0</b></button>
 <button data-page="settings">
 <span>〘⚙〙</span>SETTINGS!!</button>
 <button data-page="updates">
 <span>〘↻〙</span>GAME HISTORY!!</button>
 </nav>
-<section class="mini-player" aria-label="Temporary music player">
-<canvas id="visualizer" width="300" height="86" aria-label="Audio visualizer">
-</canvas>
-<div class="mini-controls">
-<button id="audio-toggle" type="button">PLAY MONKEYS</button>
-<label for="audio-upload">UPLOAD SONG</label>
-<input id="audio-upload" type="file" accept="audio/*">
-</div>
-<p id="track-name">Monkeys Spinning Monkeys</p>
-<p class="track-credit"><a href="https://incompetech.com/music/royalty-free/index.html?Search=Search&amp;isrc=USUAN1400011" target="_blank" rel="noopener">Kevin MacLeod · CC BY 4.0</a></p>
-<audio id="temp-audio" loop>
-<source src="monkeys-spinning-monkeys.mp3" type="audio/mpeg">
-</audio>
-</section>
+<a class="sidebar-guns" href="https://guns.lol/thisfum" target="_blank" rel="noopener noreferrer">
+<img src="assets/images/branding/guns-logo2.png" alt="Two time logo">
+<strong>more from two time :3</strong>
+</a>
 <p>giving you games<br> since 2023 <3</p>
 </aside>
 <main>
@@ -52,7 +45,7 @@
 <div class="hero-content">
 <p class="overline">DEEZ GAMES PRESENTS!!</p>
 <h1>0D</h1>
-<p class="welcome">Hello &gt;w&lt; </p>
+<p id="face-greeting" class="welcome">Hello OwO</p>
 <div class="big-links">
 <button data-page="games">GAMES!!</button>
 <button data-page="suggestions">GAME SUGGESTIONS!!</button>
@@ -84,12 +77,16 @@
 <div class="page-head">
 <p>0D / GAMEZZ</p>
 <h2>PLAY MY GAMES!!</h2>
-<span>no image.</span>
+<button id="random-game" type="button">RANDOM GAME ↝</button>
 </div>
 <div class="game-tools">
 <input id="search" placeholder="search games...">
 <b id="total">
 </b>
+</div>
+<div class="game-memory">
+<section><h3>★ FAVORITES</h3><div id="favorite-games"><p>star a game and it will live here :3</p></div></section>
+<section><h3>↻ RECENTLY PLAYED</h3><div id="recent-games"><p>your recent creatures will appear here</p></div></section>
 </div>
 <div id="game-list">
 </div>
@@ -103,7 +100,7 @@
 <p id="chat-join-status"></p>
 </section>
 <section id="chat-room" hidden>
-<div class="chat-v2-grid"><nav class="room-list" aria-label="Chat rooms"><b>ROOMS</b><button class="room-button active" data-room="general" type="button"># GENERAL</button><button class="room-button" data-room="games" type="button"># GAMES</button><button class="room-button" data-room="random" type="button"># RANDOM</button><button id="chat-leave" type="button">LEAVE CHAT</button></nav><section class="chat-main"><div class="chat-room-head"><div><b id="chat-room-name"># GENERAL</b><span id="chat-who"></span></div><button id="chat-load-older" type="button">LOAD OLDER</button></div><div id="chat-pins" class="chat-pins" hidden></div><div id="chat-messages" class="chat-messages" aria-live="polite"><p class="chat-empty">listening for others...</p></div><div id="chat-reply-draft" class="chat-reply-draft" hidden><span></span><button type="button">CANCEL</button></div><form id="chat-send-form"><label class="sr-only" for="chat-message">Message</label><input id="chat-message" maxlength="5000" required autocomplete="off" placeholder="say something... @someone"><button type="submit">SEND →</button></form><p id="chat-send-status"></p></section><section class="online-panel"><b>ONLINE NOW</b><div id="online-list"><span>detecting creatures...</span></div></section></div>
+<div class="chat-v2-grid"><nav class="room-list" aria-label="Chat rooms"><b>ROOMS</b><button class="room-button active" data-room="general" type="button"># GENERAL <b class="room-unread" data-unread-room="general" hidden>0</b></button><button class="room-button" data-room="games" type="button"># GAMES <b class="room-unread" data-unread-room="games" hidden>0</b></button><button class="room-button" data-room="random" type="button"># RANDOM <b class="room-unread" data-unread-room="random" hidden>0</b></button><button id="chat-leave" type="button">LEAVE CHAT</button></nav><section class="chat-main"><div class="chat-room-head"><div><b id="chat-room-name"># GENERAL</b><span id="chat-who"></span></div><button id="chat-load-older" type="button">LOAD OLDER</button></div><div id="chat-pins" class="chat-pins" hidden></div><div id="chat-messages" class="chat-messages" aria-live="polite"><p class="chat-empty">listening for others...</p></div><div id="chat-reply-draft" class="chat-reply-draft" hidden><span></span><button type="button">CANCEL</button></div><form id="chat-send-form"><label class="sr-only" for="chat-message">Message</label><input id="chat-message" maxlength="5000" required autocomplete="off" placeholder="say something... @someone"><button type="submit">SEND →</button></form><p id="chat-send-status"></p></section><section class="online-panel"><b>ONLINE NOW</b><div id="online-list"><span>detecting creatures...</span></div></section></div>
 </section>
 </div>
 </section>
@@ -136,10 +133,26 @@
 <div class="settings-grid">
 <section class="settings-card"><h3>QUICK BUTTONS</h3><button id="settings-rate" type="button">★ RATE ME!!</button><button id="settings-panic" type="button">! PANIC BUTTON!!</button><button id="settings-notifications" type="button" aria-pressed="true">NOTIFICATIONS: ON</button></section>
 <section id="settings-theme" class="settings-card"><h3>SITE THEME</h3><label for="theme-select">COLOR DIMENSION</label><select id="theme-select"><option value="red">RED (DEFAULT)</option><option value="white">WHITE</option><option value="uwu">UwU</option><option value="blue">BLUE</option><option value="black">PITCH BLACK</option><option value="zen">ZEN MODE</option><option value="custom">CUSTOM</option></select><div id="custom-theme-controls" hidden><label>BACKGROUND <input id="theme-background" type="color" value="#0d0607"></label><label>MAIN COLOR <input id="theme-main" type="color" value="#790f1d"></label><label>ACCENT <input id="theme-accent" type="color" value="#ff9aa6"></label><label>TEXT <input id="theme-text" type="color" value="#fff4f4"></label></div><p id="theme-status">Your theme stays on this browser.</p></section>
+<section class="settings-card settings-music">
+  <h3>music from my fav game <3</h3>
+  <p> GRACE OST!!</p>
+
+  <iframe style="border:0;width:100%;height:120px;"
+
+src="https://bandcamp.com/EmbeddedPlayer/album=4083278829/size=large/bgcol=333333/linkcol=9a64ff/tracklist=false/artwork=small/transparent=true/"
+    seamless>
+    <a
+href="https://rosefield-sciences.bandcamp.com/album/roblox-grace-ost-garden-trax-disc-1">
+      Roblox GRACE OST (Garden Trax:Disc 1) by Rosefield Sciences
+    </a>
+  </iframe>
+</section>
 <section id="settings-account" class="settings-card"><h3>ACCOUNT + CODE</h3><p>Sign in or copy your creature code here.</p></section>
-<section id="settings-identity" class="settings-card"><h3>CHAT LOOK</h3><p>Your name color follows you into GooberChat. Staff can hide or lower their visible title without losing powers.</p><div id="settings-color-slot"></div><label for="display-role">SHOW MY TITLE AS</label><select id="display-role"><option value="user">NORMAL CREATURE</option></select></section>
+<section id="settings-identity" class="settings-card"><h3>CHAT LOOK</h3><p>Build your chat creature. Changes apply to new messages and your online card.</p><div id="settings-color-slot"></div><div class="chat-look-grid"><label>PROFILE PICTURE<select id="chat-avatar"><option value="🌙">🌙 MOON</option><option value="⭐">⭐ STAR</option><option value="🐾">🐾 PAW</option><option value="👁️">👁️ EYE</option><option value="🍰">🍰 CAKE</option><option value="💿">💿 DISC</option></select></label><label>BUBBLE COLOR<input id="chat-bubble-color" type="color" value="#17090b"></label><label>BORDER COLOR<input id="chat-border-color" type="color" value="#8d313b"></label><label>NAME FONT<select id="chat-font"><option value="mono">TERMINAL</option><option value="round">ROUND</option><option value="serif">DRAMATIC</option></select></label><label class="wide">CUSTOM STATUS<input id="chat-status" maxlength="30" placeholder="doing creature activities"></label><label>CHAT SIZE<select id="chat-density"><option value="normal">NORMAL</option><option value="compact">COMPACT</option></select></label><label>SHOW MY TITLE AS<select id="display-role"><option value="user">NORMAL CREATURE</option></select></label></div><section id="custom-pfp-controls" class="custom-pfp-controls" hidden><h4>CUSTOM PFP ACCESS</h4><p>Your image is cropped square and compressed before upload. Original file max: 5 MB.</p><img id="custom-pfp-preview" alt="Custom profile picture preview" hidden><input id="custom-pfp-file" type="file" accept="image/png,image/jpeg,image/webp"><div><button id="custom-pfp-upload" type="button">UPLOAD PFP →</button><button id="custom-pfp-remove" type="button">USE PRESET INSTEAD</button></div><p id="custom-pfp-status"></p></section></section>
 <section id="settings-staff" class="settings-card settings-staff"><h3>STAFF MANAGEMENT</h3></section>
+<section id="pfp-access-panel" class="settings-card settings-staff pfp-access-panel" hidden><h3>CUSTOM PFP COUNCIL</h3><p>Owner grants upload access by creature code. Staff can reset an inappropriate custom picture.</p><form id="pfp-access-form"><label for="pfp-access-code">USER CODE</label><input id="pfp-access-code" required placeholder="paste their full creature code"><label for="pfp-access-name">DISPLAY NAME</label><input id="pfp-access-name" maxlength="30" required placeholder="who gets access"><button type="submit">GRANT PFP ACCESS →</button></form><p id="pfp-access-status"></p><div id="pfp-access-list"></div><form id="pfp-reset-form"><label for="pfp-reset-code">RESET A CUSTOM PFP</label><input id="pfp-reset-code" required placeholder="paste their full creature code"><button type="submit">RESET PFP →</button></form><p id="pfp-reset-status"></p></section>
 <section id="ban-panel" class="settings-card settings-staff ban-panel" hidden><h3>ACCESS BANS</h3><p>Use the creature code already shown beside their chat name. Channel bans lock one room; Games bans bounce them out of the entire Games tab.</p><form id="ban-form"><label for="ban-user-code">USER CODE</label><input id="ban-user-code" required placeholder="paste their creature code"><label for="ban-type">BAN TYPE</label><select id="ban-type"><option value="channel">CHAT CHANNEL</option><option value="games">ENTIRE GAMES TAB</option></select><div id="ban-channel-field"><label for="ban-channel">CHANNEL</label><select id="ban-channel"><option value="general"># GENERAL</option><option value="games"># GAMES</option><option value="random"># RANDOM</option></select></div><label for="ban-reason">REASON</label><input id="ban-reason" maxlength="200" required placeholder="why they got bonked"><button type="submit">BAN ACCESS →</button></form><p id="ban-status"></p><div id="ban-list"></div></section>
+<section id="mod-log-panel" class="settings-card settings-staff mod-log-panel" hidden><h3>MOD LOG</h3><p>Search by the copyable code beside a chat name. Deleted messages remain here for staff review.</p><form id="mod-log-form"><input id="mod-log-code" placeholder="paste creature code"><button type="submit">SEARCH LOG →</button></form><button id="mod-log-clear" type="button">SHOW ALL RECENT</button><div id="mod-log-list"><p>waiting for staff mode...</p></div></section>
 </div>
 </section>
 <section id="announce" class="page" hidden>
@@ -259,8 +272,8 @@
 </section>
 </main>
 <section id="toast-stack" class="toast-stack" aria-live="polite" aria-label="Site notifications"></section>
-<script src="app.js?v=20">
+<script src="assets/js/app.js?v=22">
 </script>
-<script src="firebase-v2.js?v=5"></script>
+<script src="assets/js/firebase-v2.js?v=9"></script>
 </body>
 </html>
