@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" role="img" aria-labelledby="title desc">
+  <title id="title">DOOM Dimension 0 preview</title>
+  <desc id="desc">A red and black original graphic reading DOOM runs here.</desc>
+  <rect width="900" height="500" fill="#080203"/>
+  <path d="M0 370 120 210l85 65 110-170 105 145 120-205 95 205 80-90 185 210v130H0Z" fill="#2b050a"/>
+  <path d="M0 420 165 260l85 80 110-155 110 125 110-190 120 210 90-75 110 165v80H0Z" fill="#720c18" opacity=".8"/>
+  <g fill="none" stroke="#ff5368" stroke-width="12">
+    <path d="M80 100h150l45 45v210l-45 45H80Zm55 60v180h55l25-25V185l-25-25Z"/>
+    <path d="M310 100h145l50 50v200l-50 50H310l-50-50V150Zm60 60-50 50v80l50 50h25l50-50v-80l-50-50Z"/>
+    <path d="m525 400 35-300h75l35 155 35-155h75l40 300h-65l-15-160-35 160h-55l-35-160-15 160Z"/>
+  </g>
+  <text x="450" y="468" fill="#ffe8eb" font-family="monospace" font-size="31" font-weight="700" text-anchor="middle">RUNS IN DIMENSION 0 // SUGGESTED BY SETH</text>
+</svg>
