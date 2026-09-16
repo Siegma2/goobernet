@@ -21,7 +21,20 @@ Promise.all([
  const banPanel=$('#ban-panel'),banForm=$('#ban-form'),banUserCode=$('#ban-user-code'),banType=$('#ban-type'),banChannelField=$('#ban-channel-field'),banChannel=$('#ban-channel'),banReason=$('#ban-reason'),banStatus=$('#ban-status'),banList=$('#ban-list');
  const avatarSelect=$('#chat-avatar'),bubbleInput=$('#chat-bubble-color'),borderInput=$('#chat-border-color'),fontSelect=$('#chat-font'),statusInput=$('#chat-status'),densitySelect=$('#chat-density'),chatUnread=$('#chat-unread'),announceUnread=$('#announce-unread'),modLogPanel=$('#mod-log-panel'),modLogForm=$('#mod-log-form'),modLogCode=$('#mod-log-code'),modLogClear=$('#mod-log-clear'),modLogList=$('#mod-log-list');
  const customPfpControls=$('#custom-pfp-controls'),customPfpFile=$('#custom-pfp-file'),customPfpPreview=$('#custom-pfp-preview'),customPfpUpload=$('#custom-pfp-upload'),customPfpRemove=$('#custom-pfp-remove'),customPfpStatus=$('#custom-pfp-status'),pfpAccessPanel=$('#pfp-access-panel'),pfpAccessForm=$('#pfp-access-form'),pfpAccessCode=$('#pfp-access-code'),pfpAccessName=$('#pfp-access-name'),pfpAccessStatus=$('#pfp-access-status'),pfpAccessList=$('#pfp-access-list'),pfpResetForm=$('#pfp-reset-form'),pfpResetCode=$('#pfp-reset-code'),pfpResetStatus=$('#pfp-reset-status');
- const tempRoomList=$('#temp-room-list'),tempRoomForm=$('#temp-room-form'),tempRoomName=$('#temp-room-name'),profileCard=$('#profile-card'),profileCardClose=$('#profile-card-close'),profileCardAvatar=$('#profile-card-avatar'),profileCardName=$('#profile-card-name'),profileCardId=$('#profile-card-id'),profileCardActivity=$('#profile-card-activity');
+ const tempRoomList=$('#temp-room-list'),tempRoomForm=$('#temp-room-form'),tempRoomName=$('#temp-room-name'),profileCard=$('#profile-card'),profileCardClose=$('#profile-card-close'),profileCardAvatar=$('#profile-card-avatar'),profileCardName=$('#profile-card-name'),profileCardId=$('#profile-card-id'),profileCardActivity=$('#profile-card-activity'),visitorCount=$('#visitor-count');
+ let visitorRecorded=false;
+
+ async function recordVisitor(){
+  if(visitorRecorded||!auth.currentUser||!visitorCount)return;visitorRecorded=true;
+  try{
+   let visitorId=localStorage.getItem('gooberVisitorId');
+   if(!visitorId){visitorId=crypto.randomUUID();localStorage.setItem('gooberVisitorId',visitorId)}
+   const visitorRef=firestore.doc(db,'siteVisitors',visitorId),visitorDoc=await firestore.getDoc(visitorRef);
+   if(!visitorDoc.exists())await firestore.setDoc(visitorRef,{createdAt:firestore.serverTimestamp()});
+   const total=await firestore.getCountFromServer(firestore.collection(db,'siteVisitors'));
+   visitorCount.textContent=total.data().count.toLocaleString();
+  }catch(error){console.error(error);visitorCount.textContent='???'}
+ }
 
  avatarSelect.value=chatLook.avatar;bubbleInput.value=chatLook.bubble;borderInput.value=chatLook.border;fontSelect.value=chatLook.font;statusInput.value=chatLook.status;densitySelect.value=chatLook.density;chatMessages.classList.toggle('compact',chatLook.density==='compact');
  const saveLook=()=>{chatLook.avatar=avatarSelect.value;chatLook.bubble=bubbleInput.value;chatLook.border=borderInput.value;chatLook.font=fontSelect.value;chatLook.status=statusInput.value.trim().slice(0,30);chatLook.density=densitySelect.value;localStorage.setItem('gooberAvatar',chatLook.avatar);localStorage.setItem('gooberBubble',chatLook.bubble);localStorage.setItem('gooberBorder',chatLook.border);localStorage.setItem('gooberFont',chatLook.font);localStorage.setItem('gooberStatus',chatLook.status);localStorage.setItem('gooberDensity',chatLook.density);chatMessages.classList.toggle('compact',chatLook.density==='compact');if(chatNickname)updatePresence()};[avatarSelect,bubbleInput,borderInput,fontSelect,statusInput,densitySelect].forEach(input=>input.onchange=saveLook);statusInput.oninput=saveLook;
@@ -127,7 +140,8 @@ Promise.all([
  modLogForm.onsubmit=event=>{event.preventDefault();logFilter=modLogCode.value.trim();watchLogs()};modLogClear.onclick=()=>{logFilter='';modLogCode.value='';watchLogs()};
 
  firebaseAuth.onAuthStateChanged(auth,async user=>{
-  if(!user){await firebaseAuth.signInAnonymously(auth);return}
+ if(!user){await firebaseAuth.signInAnonymously(auth);return}
+  recordVisitor();
   const primary=isPrimaryOwner(user),googleUser=!!user&&!user.isAnonymous;
   if(adminUnsub){adminUnsub();adminUnsub=null}if(ownerDeviceUnsub){ownerDeviceUnsub();ownerDeviceUnsub=null}if(banUnsub){banUnsub();banUnsub=null}if(pfpAccessUnsub){pfpAccessUnsub();pfpAccessUnsub=null}
   currentOwner=primary;currentOwnerName='';currentAdmin=false;currentAdminName='';
