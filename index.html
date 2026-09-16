@@ -9,7 +9,7 @@
 <meta property="og:image" content="https://static.wikitide.net/gracewiki/5/59/Vision_Icon.png">
 <meta property="og:type" content="website">
 <link rel="icon" type="image/png" href="assets/images/branding/favicon-v2.png?v=1">
-<link rel="stylesheet" href="assets/css/style.css?v=30">
+<link rel="stylesheet" href="assets/css/style.css?v=31">
 </head>
 <body>
 <section id="important-banner" class="important-banner" hidden><button id="important-open" type="button"><b>IMPORTANT UPDATE · ANNOUNCEMENT</b><strong id="important-title"></strong><small id="important-author"></small><span id="important-text"></span></button><button id="important-dismiss" type="button" aria-label="Dismiss important update">×</button></section>
@@ -28,8 +28,8 @@
 <span>〘📢〙</span>ANNOUNCE!! <b id="announce-unread" class="unread-count" hidden>0</b></button>
 <button data-page="settings">
 <span>〘⚙〙</span>SETTINGS!!</button>
-<button data-page="updates">
-<span>〘↻〙</span>GAME HISTORY!!</button>
+<button data-page="extras">
+<span>〘✦〙</span>EXTRAS!!</button>
 </nav>
 <a class="sidebar-github" href="https://github.com/Siegma2/goobernet" target="_blank" rel="noopener noreferrer"><span>⌘</span><strong>VIEW THE 0D CODE</strong><small>GITHUB REPOSITORY ↗</small></a>
 <a class="sidebar-guns" href="https://guns.lol/infedite" target="_blank" rel="noopener noreferrer">
@@ -41,6 +41,10 @@
 <main>
 <section id="home" class="page">
 <div class="hero">
+<div class="home-corner">
+<button class="history-card" data-page="updates" type="button"><span>↻ SITE LORE</span><strong>GAME HISTORY!!</strong></button>
+<div class="visitor-card"><span>UNIQUE BROWSERS</span><strong id="visitor-count">...</strong></div>
+</div>
 <div class="backdrop">
 </div>
 <div class="hero-content">
@@ -170,6 +174,20 @@ href="https://rosefield-sciences.bandcamp.com/album/roblox-grace-ost-garden-trax
 <section id="announcement-list" class="announcement-list" aria-live="polite"><p class="announce-empty">checking...</p></section>
 </div>
 </section>
+<section id="extras" class="page" hidden>
+<div class="page-head">
+<p>0D / EXTRAS!!</p>
+<h2>EXTRA CREATURES</h2>
+<span>the miscellaneous dimension</span>
+</div>
+<!-- EDIT YOUR EXTRAS BELOW THIS LINE -->
+<div class="extras-grid">
+<article><b>EXTRA SLOT 01</b><h3>PUT SOMETHING HERE!!</h3><p>Edit this card in index.html using github.dev.</p></article>
+<article><b>EXTRA SLOT 02</b><h3>ANOTHER THING!!</h3><p>Links, secret pages, tools, images, or whatever creature you invent.</p></article>
+<article><b>EXTRA SLOT 03</b><h3>UNIDENTIFIED OBJECT</h3><p>This entire block can be replaced or duplicated.</p></article>
+</div>
+<!-- STOP EDITING EXTRAS HERE -->
+</section>
 <section id="updates" class="page" hidden>
 <div class="page-head">
 <p>0D / HISTORY!!</p>
@@ -275,8 +293,8 @@ href="https://rosefield-sciences.bandcamp.com/album/roblox-grace-ost-garden-trax
 </main>
 <dialog id="profile-card" class="profile-card"><button id="profile-card-close" class="profile-card-close" type="button" aria-label="Close profile">×</button><div id="profile-card-avatar" class="profile-card-avatar">🌙</div><p>0D CREATURE PROFILE</p><h2 id="profile-card-name">UNKNOWN GOOBER</h2><button id="profile-card-id" type="button" title="Copy full user ID">ID: ??????</button><strong id="profile-card-activity">OFFLINE</strong></dialog>
 <section id="toast-stack" class="toast-stack" aria-live="polite" aria-label="Site notifications"></section>
-<script src="assets/js/app.js?v=23">
+<script src="assets/js/app.js?v=24">
 </script>
-<script src="assets/js/firebase-v2.js?v=10"></script>
+<script src="assets/js/firebase-v2.js?v=11"></script>
 </body>
 </html>
