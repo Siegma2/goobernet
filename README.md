@@ -1,42 +1,29 @@
-# GOOBERNET!
+# GOOBERNET
+WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOo
 
-official site name: **Dimension 0**
+## it has games
+it is a gaming site
 
-or **0D** because saying the whole thing will ruin your attention span 
+## it has chatting
+idk why i added this i thought its cool
 
-## we have games
+## it has themes
+epic
 
-You click the games and they work!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-wow this is absolutely insane
-## GOOBERCHAT!!
+## it has html lab
+test stuff
 
-you room in chat chat room room chat
-if you say bad stuff I will find you and delete your message
+## announcements
+yay!!!!!!!!!!
 
-## ANNOUNCE!!
+## it has you
+yeah get on
 
-the updates and what I want to say because none of y'all can announce
+## acheivements
+speedrun
 
-## HTML LAB!!
+# unimportant
 
-put html stuff and cool other stuff like links!
+### a panic button to leave
 
-## visualizer
-
-there is cool visualizer
-you put stuff in it
-and it like
-makes sounds
-## other buttons I forgot
-
-there is panic button
-you go to Google if u press
-very panic
-
-## okay bye!!
-
-wait the website link
-
-## [OPEN 0D](https://siegma2.github.io/goobernet/)
-
-okay NOW bye!!
+if you need games remove tell me
