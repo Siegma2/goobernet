@@ -32,7 +32,15 @@ function applyTheme(name,save=true){if(!builtInThemes.includes(name))name='red';
 Object.values(themeInputs).forEach(input=>input.oninput=()=>{const values=customValues();localStorage.setItem('gooberCustomTheme',JSON.stringify(values));if(themeSelect.value==='custom')applyTheme('custom')});
 themeSelect.onchange=()=>{applyTheme(themeSelect.value);if(themeSelect.value!=='red')window.gooberAchievement('theme')};
 try{const saved=JSON.parse(localStorage.getItem('gooberCustomTheme'));if(saved)Object.entries(themeInputs).forEach(([key,input])=>{if(/^#[0-9a-f]{6}$/i.test(saved[key]||''))input.value=saved[key]})}catch{}
-applyTheme(localStorage.getItem('gooberTheme')||'red',false);
+let savedTheme=localStorage.getItem('gooberTheme');
+if(!localStorage.getItem('gooberHalloweenDefaultV1')){
+ if(!savedTheme||savedTheme==='red'){
+  savedTheme='pumpkin';
+  localStorage.setItem('gooberTheme',savedTheme);
+ }
+ localStorage.setItem('gooberHalloweenDefaultV1','done');
+}
+applyTheme(savedTheme||'pumpkin',false);
 const settingsAccount=$('#settings-account'),settingsStaff=$('#settings-staff'),settingsColorSlot=$('#settings-color-slot'),announceAuth=document.querySelector('.announce-auth'),announceSetup=$('#announce-setup'),adminPanel=$('#admin-panel'),ownerDevicePanel=$('#owner-device-panel'),chatColor=$('#chat-color'),chatColorLabel=document.querySelector('label[for="chat-color"]');settingsAccount.append(announceAuth,announceSetup);settingsStaff.append(adminPanel,ownerDevicePanel);settingsColorSlot.append(chatColorLabel,chatColor);
 const metric=id=>document.getElementById(id);setInterval(()=>metric('clock').textContent=new Date().toLocaleTimeString(),1000);metric('clock').textContent=new Date().toLocaleTimeString();let frames=0,lastFps=performance.now();function countFrames(now){frames++;if(now-lastFps>=1000){metric('fps').textContent=frames;frames=0;lastFps=now}requestAnimationFrame(countFrames)}requestAnimationFrame(countFrames);async function checkPing(){let started=performance.now();try{await fetch('assets/images/branding/favicon-v2.png?ping='+Date.now(),{cache:'no-store'});metric('ping').textContent=Math.round(performance.now()-started)+'MS'}catch{metric('ping').textContent='OFFLINE'}}checkPing();setInterval(checkPing,15000);if(navigator.getBattery){navigator.getBattery().then(b=>{function battery(){metric('battery').textContent=Math.round(b.level*100)+'%'+(b.charging?'⚡':'')}battery();b.addEventListener('levelchange',battery);b.addEventListener('chargingchange',battery)})}else{metric('battery').textContent='N/A'}
 
