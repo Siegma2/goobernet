@@ -379,7 +379,13 @@ body.chat-open .important-banner{display:none!important}
 .chat-v3{position:relative;width:100%;height:100dvh!important;min-height:0!important;margin:0;border:0;box-shadow:none}
 .chat-v3 #chat-room{height:100%}
 .chat-v3-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) clamp(210px,19vw,290px);grid-template-rows:minmax(0,1fr) auto;box-sizing:border-box;height:100%;padding:0}
-.chat-v3 .chat-main{grid-column:1;grid-row:1;min-width:0;min-height:0;height:auto}
+.chat-v3 .chat-main{grid-column:1;grid-row:1;grid-template-rows:auto auto minmax(0,1fr) auto auto auto;min-width:0;min-height:0;height:auto;overflow:hidden}
+.chat-v3 .chat-room-head{grid-row:1}
+.chat-v3 #chat-pins{grid-row:2}
+.chat-v3 #chat-messages{grid-row:3}
+.chat-v3 #chat-reply-draft{grid-row:4}
+.chat-v3 #chat-send-form{grid-row:5;min-height:0;position:relative;z-index:2}
+.chat-v3 #chat-send-status{grid-row:6;box-sizing:border-box;margin:0;padding:4px 12px;min-height:23px;background:var(--theme-surface,#1b090c)}
 .chat-v3 .chat-side-panel{grid-column:2;grid-row:1;position:static!important;inset:auto!important;width:auto!important;height:auto!important;min-height:0;padding:14px;overflow:auto;transform:none!important;border-left:1px solid var(--theme-line,#71303a);box-shadow:none!important}
 .chat-head-actions{display:flex;gap:7px;align-items:center}
 .chat-head-actions button{padding:7px 10px!important}
