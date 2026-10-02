@@ -44,8 +44,19 @@ Promise.all([
  const visibleRole=()=>{const real=role();return real==='owner'?(displayRole==='owner'||displayRole==='admin'?displayRole:'user'):real==='admin'&&displayRole==='admin'?'admin':'user'};
  function syncDisplayRole(){const real=role(),choices=real==='owner'?[['owner','OWNER'],['admin','ADMIN'],['user','NORMAL CREATURE']]:real==='admin'?[['admin','ADMIN'],['user','NORMAL CREATURE']]:[['user','NORMAL CREATURE']];if(!choices.some(([value])=>value===displayRole))displayRole=real;displayRoleSelect.replaceChildren(...choices.map(([value,label])=>{const option=document.createElement('option');option.value=value;option.textContent=label;return option}));displayRoleSelect.value=displayRole;displayRoleSelect.disabled=real==='user'}
  displayRoleSelect.onchange=()=>{displayRole=displayRoleSelect.value;localStorage.setItem('gooberDisplayRole',displayRole);if(chatNickname){chatWho.textContent=(visibleRole()==='owner'?'〘OWNER〙 ':visibleRole()==='admin'?'〘ADMIN〙 ':'')+chatNickname;updatePresence()}if(latestChatDocs.length)renderChat(latestChatDocs)};
- const signInGoogle=()=>firebaseAuth.signInWithPopup(auth,provider).catch(error=>{console.error(error);authStatus.textContent='sign-in got bonked :/';chatJoinStatus.textContent='sign-in got bonked :/'});
+ const showSignInError=error=>{console.error(error);const code=String(error?.code||'unknown').replace(/^auth\//,'');authStatus.textContent='SIGN-IN ERROR: '+code;chatJoinStatus.textContent='SIGN-IN ERROR: '+code};
+ const signInGoogle=async()=>{
+  authStatus.textContent='opening Google sign-in...';
+  try{await firebaseAuth.signInWithPopup(auth,provider)}
+  catch(error){
+   if(['auth/popup-blocked','auth/operation-not-supported-in-this-environment'].includes(error?.code)){
+    authStatus.textContent='popup blocked — switching to redirect...';
+    try{await firebaseAuth.signInWithRedirect(auth,provider)}catch(redirectError){showSignInError(redirectError)}
+   }else showSignInError(error)
+  }
+ };
  signIn.onclick=signInGoogle;chatOwnerSignIn.onclick=signInGoogle;signOut.onclick=()=>firebaseAuth.signOut(auth);
+ firebaseAuth.getRedirectResult(auth).catch(showSignInError);
  copyUid.onclick=async()=>{await navigator.clipboard.writeText(uidBox.textContent);copyUid.textContent='COPIED!!'};
 
  function showImportant(snapshot){const doc=snapshot.docs.find(item=>item.data().important===true);if(!doc||importantShownId===doc.id)return;importantShownId=doc.id;const data=doc.data(),close=()=>{clearTimeout(importantTimer);importantBanner.hidden=true};importantTitle.textContent=data.title||'IMPORTANT UPDATE';importantAuthor.textContent='BY '+(data.authorName||'THE OWNER');importantText.textContent=data.body||'';importantBanner.hidden=false;$('#important-open').onclick=()=>{show('announce');close()};$('#important-dismiss').onclick=close;importantTimer=setTimeout(close,30000)}
