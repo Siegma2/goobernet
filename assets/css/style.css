@@ -378,12 +378,21 @@ body.chat-open #chat{position:fixed;z-index:40;inset:0;box-sizing:border-box;wid
 body.chat-open .important-banner{display:none!important}
 .chat-v3{position:relative;width:100%;height:100dvh!important;min-height:0!important;margin:0;border:0;box-shadow:none}
 .chat-v3 #chat-room{height:100%}
-.chat-v3-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) clamp(210px,19vw,290px);height:100%;padding-bottom:54px}
+.chat-v3-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) clamp(210px,19vw,290px);box-sizing:border-box;height:100%;padding-bottom:54px}
 .chat-v3 .chat-main{grid-column:1;min-width:0;height:100%}
 .chat-v3 .chat-side-panel{grid-column:2;position:static!important;inset:auto!important;width:auto!important;height:100%!important;padding:14px;overflow:auto;transform:none!important;border-left:1px solid var(--theme-line,#71303a);box-shadow:none!important}
 .chat-head-actions{display:flex;gap:7px;align-items:center}
 .chat-head-actions button{padding:7px 10px!important}
 .chat-pop-menu{position:absolute;z-index:60;top:58px;right:calc(clamp(210px,19vw,290px) + 12px);box-sizing:border-box;width:min(430px,calc(100vw - 30px));max-height:calc(100dvh - 126px);padding:13px;overflow:auto;background:var(--theme-surface,#1b090c);border:2px solid var(--theme-accent,#ff9aa6);box-shadow:9px 9px 0 #0009}
+.chat-pop-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px;color:var(--theme-accent,#ff9aa6)}
+.chat-pop-head #chat-menu-close{width:34px;height:34px;padding:0!important;font-size:1.25rem}
+.chat-gate-exit{margin-top:12px}
+.chat-v3 #online-list{display:grid;align-content:start;gap:6px;min-width:0}
+.chat-v3 .online-user{box-sizing:border-box;width:100%;min-width:0;grid-template-columns:38px minmax(0,1fr);overflow:hidden;background:color-mix(in srgb,var(--theme-surface-2,#080304) 72%,transparent);border:1px solid color-mix(in srgb,var(--theme-line,#71303a) 65%,transparent)}
+.chat-v3 .online-user>span:nth-child(2){display:grid;min-width:0;overflow:hidden}
+.chat-v3 .online-user>span:nth-child(2)>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chat-v3 .online-user>div{display:flex;grid-column:1/-1;gap:4px;flex-wrap:wrap}
+.chat-v3 .online-user .mute-button{flex:1 1 54px;min-width:0;padding:5px!important;font-size:.5rem!important}
 .chat-pop-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px}
 .chat-pop-tabs button.active{color:var(--theme-bg,#080304)!important;background:var(--theme-accent,#ff9aa6)!important}
 .chat-pop-menu .chat-profile-editor{margin-top:12px}
