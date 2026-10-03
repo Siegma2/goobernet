@@ -34,14 +34,18 @@ Promise.all([
 
  async function recordVisitor(){
   if(visitorRecorded||!auth.currentUser||!visitorCount)return;visitorRecorded=true;
+  let visitorId=localStorage.getItem('gooberVisitorId');
+  if(!visitorId){visitorId=crypto.randomUUID();localStorage.setItem('gooberVisitorId',visitorId)}
   try{
-   let visitorId=localStorage.getItem('gooberVisitorId');
-   if(!visitorId){visitorId=crypto.randomUUID();localStorage.setItem('gooberVisitorId',visitorId)}
    const visitorRef=firestore.doc(db,'siteVisitors',visitorId),visitorDoc=await firestore.getDoc(visitorRef);
    if(!visitorDoc.exists())await firestore.setDoc(visitorRef,{createdAt:firestore.serverTimestamp()});
-   const total=await firestore.getCountFromServer(firestore.collection(db,'siteVisitors'));
-   visitorCount.textContent=total.data().count.toLocaleString();if(total.data().count<=100)window.gooberTitleUnlock?.('first100');
-  }catch(error){console.error(error);visitorCount.textContent='???'}
+  }catch(error){console.error('visitor registration failed',error)}
+  try{
+   let count;
+   try{count=(await firestore.getCountFromServer(firestore.collection(db,'siteVisitors'))).data().count}
+   catch(error){console.error('aggregate visitor count failed; using fallback',error);count=(await firestore.getDocs(firestore.collection(db,'siteVisitors'))).size}
+   visitorCount.textContent=count.toLocaleString();if(count<=100)window.gooberTitleUnlock?.('first100');
+  }catch(error){console.error('visitor count failed',error);visitorCount.textContent='???';visitorRecorded=false}
  }
 
  avatarSelect.value=chatLook.avatar;bubbleInput.value=chatLook.bubble;borderInput.value=chatLook.border;fontSelect.value=chatLook.font;statusInput.value=chatLook.status;densitySelect.value=chatLook.density;profileNameInput.value=chatNickname;chatMessages.classList.toggle('compact',chatLook.density==='compact');
