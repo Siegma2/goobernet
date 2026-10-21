@@ -1,3 +1,13 @@
+# 0D Navigator — static setup (recommended)
+
+The Browser button now opens `navigator/index.html` on GitHub Pages. No Node hosting is required. Open settings inside the browser, enter a shared Wisp endpoint whose operator permits your use, test it, and save it. No endpoint is selected automatically.
+
+The worker is scoped to `/goobernet/navigator/`; synchronous XHR is disabled because GitHub Pages does not provide custom isolation headers. Some sites may not work. Connection tests check the WebSocket/Wisp greeting, not full site compatibility.
+
+See `navigator/README.md` and `navigator/credits.html`. The Node service below remains an optional alternative, not a requirement.
+
+---
+
 # 0D Navigator
 
 This browser service is separate from the existing GitHub Pages website. It uses Scramjet 1.1.0, BareMux, libcurl transport, and a same-origin Wisp server. The UI is original Goobernet code; SomethingOS was inspected as an architectural example, not copied.

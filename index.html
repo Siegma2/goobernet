@@ -267,7 +267,7 @@ href="https://rosefield-sciences.bandcamp.com/album/roblox-grace-ost-garden-trax
 </article>
 </div>
 </section>
-<section id="browser" class="page" hidden><div class="page-head"><p>0D / NAVIGATOR</p><h2>WHERE WE GOING?</h2><span>a window out of dimension zero :3</span></div><section class="settings-card navigator-launcher"><h3>0D NAVIGATOR</h3><p>Tabs, bookmarks, and a Scramjet browser. Opens in its own tab.</p><a id="navigator-launch" target="_blank" rel="noopener noreferrer" hidden>OPEN BROWSER ↗</a><p id="navigator-status" role="status" aria-live="polite"></p><details><summary>CONNECT A BROWSER SERVICE</summary><p>Use the HTTPS address of a Navigator service you trust. Your browsing requests pass through that service.</p><form id="navigator-connect"><label for="navigator-service">SERVICE ADDRESS</label><input id="navigator-service" type="url" placeholder="https://browser.example.com" required><button type="submit">CONNECT</button></form></details></section></section>
+<section id="browser" class="page" hidden><div class="page-head"><p>0D / NAVIGATOR</p><h2>WHERE WE GOING?</h2><span>a window out of dimension zero :3</span></div><section class="settings-card navigator-launcher"><h3>0D NAVIGATOR</h3><p>Tabs, bookmarks, and a Scramjet browser. No personal server required.</p><a id="navigator-launch" href="navigator/" target="_blank" rel="noopener noreferrer">OPEN BROWSER ↗</a><p>Choose a shared Wisp server in the browser's ⚙ settings, test it, then save it. Only use a server whose operator permits your use.</p><p>Shared servers are run by other people and may have outages or limits. Your web requests pass through the selected server.</p></section></section>
 <section id="lab" class="page" hidden>
 <div class="page-head">
 <p>0D / HTML LAB!!</p>
@@ -307,18 +307,6 @@ href="https://rosefield-sciences.bandcamp.com/album/roblox-grace-ost-garden-trax
 <script src="assets/js/app.js?v=33">
 </script>
 <script src="assets/js/firebase-v2.js?v=22"></script>
-<script>
-// Set this after deploying the Node browser service to its own HTTPS origin.
-const DEFAULT_NAVIGATOR_SERVICE = '';
-(() => {
- const form=document.getElementById('navigator-connect'),input=document.getElementById('navigator-service'),launch=document.getElementById('navigator-launch'),status=document.getElementById('navigator-status');
- let saved='';try{saved=localStorage.getItem('gooberNavigatorService')||''}catch{}
- input.value=DEFAULT_NAVIGATOR_SERVICE||saved;
- function validate(value){const url=new URL(value);if(url.protocol!=='https:'&&!(url.protocol==='http:'&&['localhost','127.0.0.1'].includes(url.hostname)))throw new Error('Use an HTTPS browser service address.');if(url.username||url.password||url.pathname!=='/'||url.search||url.hash)throw new Error('Enter only the service origin, such as https://browser.example.com.');return url.origin+'/'}
- function sync(){try{launch.href=validate(input.value.trim());launch.hidden=false;status.textContent='Ready to open your browser service in a new tab.'}catch{launch.removeAttribute('href');launch.hidden=true;status.textContent='The browser service is not connected yet. Connect a trusted service below.'}}
- form.onsubmit=event=>{event.preventDefault();try{const url=validate(input.value.trim());input.value=url;sync();try{localStorage.setItem('gooberNavigatorService',url)}catch{status.textContent='Connected for this visit. Your browser could not save the setting.'}}catch(error){status.textContent=error.message}};
- input.oninput=()=>{launch.hidden=true;status.textContent='Press CONNECT to use this service.'};sync();
-})();
-</script>
+
 </body>
 </html>
