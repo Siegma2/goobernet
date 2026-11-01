@@ -1,5 +1,5 @@
 const FIREBASE_CONFIG={apiKey:'AIzaSyBHqyr2IqlJrbAvIwGMCkWRUULIh13nt38',authDomain:'goobernet-9129d.firebaseapp.com',projectId:'goobernet-9129d',storageBucket:'goobernet-9129d.firebasestorage.app',messagingSenderId:'971675065814',appId:'1:971675065814:web:562730d397bca5a9a15877',measurementId:'G-KEHCVWYRS7'};
-const OWNER_UID='dj3hr2HeXjh5npNXkB9wPws86nF2',ROOMS=['general','games','random','images'];
+const OWNER_UID='dbNR6VfIgbcqmhCJALehkkuWM3g2',ROOMS=['general','games','random','images'];
 
 Promise.all([
  import('https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js'),
