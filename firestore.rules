@@ -53,14 +53,14 @@ service cloud.firestore {
         'online','idiot','reaction','yapper','architect','loving','first100',
         'pumpkin','colorful','normal','rickrolled','mystery','grass','noimage',
         'main','everything','silliest','giveaway_winner',
-        'owner_favorite','please_go_outside','trans_flag','moderately_powerful'
+        'owner_favorite','please_go_outside','trans_flag','bi_flag','moderately_powerful'
       ];
     }
     function specialTitle(titleId) {
-      return titleId in ['owner_favorite','please_go_outside','trans_flag','moderately_powerful'];
+      return titleId in ['owner_favorite','please_go_outside','trans_flag','bi_flag','moderately_powerful'];
     }
     function canGiveTitle(titleId) {
-      return (titleId in ['owner_favorite','please_go_outside','trans_flag'] && owner())
+      return (titleId in ['owner_favorite','please_go_outside','trans_flag','bi_flag'] && owner())
         || (titleId == 'moderately_powerful' && admin() && !owner())
         || (grantableTitle(titleId) && !specialTitle(titleId) && staff());
     }
@@ -78,15 +78,27 @@ service cloud.firestore {
           (data.title == "THE OWNER’S FAVORITE" && (owner() || hasGiftedTitle('owner_favorite', 'owner')))
           || (data.title == 'PLEASE GO OUTSIDE' && (owner() || hasGiftedTitle('please_go_outside', 'owner')))
           || (data.title == '🏳️‍⚧️' && (owner() || hasGiftedTitle('trans_flag', 'owner')))
+          || (data.title == 'BISEXUAL FLAG' && (owner() || hasGiftedTitle('bi_flag', 'owner')))
           || (data.title == 'MODERATELY POWERFUL' && ((!owner() && admin()) || hasGiftedTitle('moderately_powerful', 'admin')))
-          || !(data.title in ["THE OWNER’S FAVORITE",'PLEASE GO OUTSIDE','🏳️‍⚧️','MODERATELY POWERFUL'])
+          || !(data.title in ["THE OWNER’S FAVORITE",'PLEASE GO OUTSIDE','🏳️‍⚧️','BISEXUAL FLAG','MODERATELY POWERFUL'])
         )
       );
     }
     function validProfile(data, uid) {
-      return data.keys().hasOnly(['imageData','bio','favoriteGame','currentTheme','updatedAt','updatedBy'])
+      return data.keys().hasOnly(['imageData','bio','favoriteGame','currentTheme','updatedAt','updatedBy','pronouns','gender','sexuality','bannerStyle','bannerColor','bannerColor2','bannerImage','link1Label','link1Url','link2Label','link2Url'])
         && data.updatedAt == request.time
         && data.updatedBy == uid
+        && (!data.keys().hasAny(['pronouns']) || (data.pronouns is string && data.pronouns.size() <= 40))
+        && (!data.keys().hasAny(['gender']) || (data.gender is string && data.gender.size() <= 40))
+        && (!data.keys().hasAny(['sexuality']) || (data.sexuality is string && data.sexuality.size() <= 40))
+        && (!data.keys().hasAny(['link1Label']) || (data.link1Label is string && data.link1Label.size() <= 30))
+        && (!data.keys().hasAny(['link2Label']) || (data.link2Label is string && data.link2Label.size() <= 30))
+        && (!data.keys().hasAny(['link1Url']) || (data.link1Url is string && data.link1Url.size() <= 300 && (data.link1Url == '' || data.link1Url.matches('^https?://[a-zA-Z0-9][^<> ]*$'))))
+        && (!data.keys().hasAny(['link2Url']) || (data.link2Url is string && data.link2Url.size() <= 300 && (data.link2Url == '' || data.link2Url.matches('^https?://[a-zA-Z0-9][^<> ]*$'))))
+        && (!data.keys().hasAny(['bannerStyle']) || data.bannerStyle in ['none','solid','gradient','image'])
+        && (!data.keys().hasAny(['bannerColor']) || (data.bannerColor is string && data.bannerColor.matches('^#[0-9a-fA-F]{6}$')))
+        && (!data.keys().hasAny(['bannerColor2']) || (data.bannerColor2 is string && data.bannerColor2.matches('^#[0-9a-fA-F]{6}$')))
+        && (!data.keys().hasAny(['bannerImage']) || (data.bannerImage is string && data.bannerImage.size() <= 140000 && data.bannerImage.matches('^data:image/jpeg;base64,.*')))
         && (!data.keys().hasAny(['imageData']) || (
           data.imageData is string
           && data.imageData.size() <= 68000
@@ -160,14 +172,16 @@ service cloud.firestore {
       allow read: if signed();
       allow create: if signed() && uid == request.auth.uid
         && validProfile(request.resource.data, request.auth.uid)
-        && (!request.resource.data.keys().hasAny(['imageData']) || pfpAllowed(uid));
+        && (!request.resource.data.keys().hasAny(['imageData','bannerImage']) || pfpAllowed(uid));
       allow update: if signed() && (
         (uid == request.auth.uid && validProfile(request.resource.data, request.auth.uid)
           && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['imageData'])
-            || !request.resource.data.keys().hasAny(['imageData']) || pfpAllowed(uid)))
+            || !request.resource.data.keys().hasAny(['imageData']) || pfpAllowed(uid))
+          && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['bannerImage'])
+            || !request.resource.data.keys().hasAny(['bannerImage']) || pfpAllowed(uid)))
         || (moderator() && canManage(uid)
-          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['imageData','updatedAt','updatedBy'])
-          && !request.resource.data.keys().hasAny(['imageData'])
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['imageData','bannerImage','updatedAt','updatedBy'])
+          && !request.resource.data.keys().hasAny(['imageData','bannerImage'])
           && validProfile(request.resource.data, request.auth.uid))
       );
       allow delete: if signed() && uid == request.auth.uid;
