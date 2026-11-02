@@ -1,5 +1,3 @@
-// 0D Navigator service. Original Goobernet UI, licensed under AGPL-3.0-only.
-// API references: github.com/MercuryWorkshop/scramjet-app and its upstream types.
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { resolve, extname, sep, dirname } from 'node:path';

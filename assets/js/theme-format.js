@@ -1,4 +1,4 @@
-/* Portable theme format. No scripts, remote URLs or CSS are accepted. */
+
 (function (root) {
  'use strict';
  const keys=['background','main','accent','text','surface','surface2','border','muted'];

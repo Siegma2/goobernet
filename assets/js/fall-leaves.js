@@ -1,4 +1,4 @@
-/* A small, pointer-transparent seasonal effect; never runs offscreen. */
+
 (() => {
  const toggle=document.querySelector('#fall-leaves-toggle');
  if(!toggle)return;

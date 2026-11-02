@@ -240,7 +240,7 @@ Promise.all([
   recordVisitor();rolesReady=false;assignedRole='user';currentOwner=isPrimaryOwner(user);currentAdmin=false;
   try{if(!currentOwner)currentOwner=(await firestore.getDoc(firestore.doc(db,'ownerDevices',user.uid))).exists();if(!currentOwner)currentAdmin=(await firestore.getDoc(firestore.doc(db,'admins',user.uid))).exists()}catch(error){console.error(error)}
   try{const [staffDoc,restriction]=await Promise.all([firestore.getDoc(firestore.doc(db,'staffRoles',user.uid)),firestore.getDoc(firestore.doc(db,'uploadRestrictions',user.uid))]);rolesReady=true;assignedRole=staffDoc.data()?.role||'user';hasPfpAccess=restriction.data()?.pfpBlocked!==true;hasMediaAccess=restriction.data()?.mediaBlocked!==true}catch{
-   // Compatibility while the owner is pasting the new rules. Do not break chat.
+
    try{hasPfpAccess=isOwner(user)||(await firestore.getDoc(firestore.doc(db,'pfpAccess',user.uid))).exists();hasMediaAccess=isOwner(user)||(await firestore.getDoc(firestore.doc(db,'mediaAccess',user.uid))).exists()}catch{hasPfpAccess=hasMediaAccess=isOwner(user)}
   }
   if(auth.currentUser?.uid!==user.uid)return;
