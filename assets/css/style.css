@@ -464,3 +464,13 @@ html[data-theme="custom"][data-custom-image="true"] .backdrop{background-image:l
 .fall-leaf{position:absolute;left:var(--x);top:-50px;width:var(--s);height:calc(var(--s)*1.125);background:url('../images/maple-leaf.svg') center/contain no-repeat;image-rendering:pixelated;opacity:.8;filter:hue-rotate(var(--tint));animation:goober-leaf-fall var(--duration) var(--delay) linear infinite;will-change:transform}
 @keyframes goober-leaf-fall{0%{transform:translate3d(0,-40px,0) rotate(var(--turn))}40%{transform:translate3d(var(--drift),45vh,0) rotate(calc(var(--turn) + 100deg))}75%{transform:translate3d(0,80vh,0) rotate(calc(var(--turn) + 200deg))}100%{transform:translate3d(var(--drift),calc(100vh + 100px),0) rotate(calc(var(--turn) + 300deg))}}
 @media(prefers-reduced-motion:reduce){#fall-leaves{display:none}}
+
+/* Role badges and independent name color/glow controls. */
+.role-badge{display:inline-block;padding:3px 7px;border:1px solid currentColor;font:900 .64rem/1.4 ui-monospace,monospace;letter-spacing:.05em;background:#11070b}
+.role-owner{color:#ff304d}.role-admin{color:#4fb2ff}.role-moderator{color:#ff9f43}.role-helper{color:#62d689}
+.profile-card .role-badge{margin:0 6px 8px 0}.profile-card .role-badge[hidden]{display:none}
+.name-style-toggle{display:flex!important;align-items:center;gap:8px}.name-style-toggle input{width:18px!important;height:18px!important;accent-color:var(--theme-accent)}
+.chat-v3 .owner-message :is(p,b),.chat-v3 .admin-message :is(p,b){color:inherit;text-shadow:none}
+.chat-v3 .creature-name{font-weight:900}.profile-card .creature-name{overflow-wrap:anywhere}
+#admin-add-form select,.pfp-access-panel select{max-width:100%;padding:9px;color:var(--theme-text);background:var(--theme-bg);border:1px solid var(--theme-accent);font:inherit}
+.upgrade-status{grid-column:1/-1;padding:12px;border:1px dashed var(--theme-accent);color:var(--theme-muted)}.upgrade-status[hidden]{display:none}

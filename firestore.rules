@@ -1,0 +1,394 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signed() { return request.auth != null; }
+    function primaryOwner() { return signed() && request.auth.uid == 'dj3hr2HeXjh5npNXkB9wPws86nF2'; }
+    function owner() { return primaryOwner() || (signed() && exists(/databases/$(database)/documents/ownerDevices/$(request.auth.uid))); }
+    function admin() { return signed() && exists(/databases/$(database)/documents/admins/$(request.auth.uid)); }
+    // Announcements, giveaways and title grants remain owner/admin-only.
+    function staff() { return owner() || admin(); }
+    function staffRole(uid) {
+      return exists(/databases/$(database)/documents/staffRoles/$(uid))
+        ? get(/databases/$(database)/documents/staffRoles/$(uid)).data.role : 'user';
+    }
+    function userRank(uid) {
+      return uid == 'dj3hr2HeXjh5npNXkB9wPws86nF2' || exists(/databases/$(database)/documents/ownerDevices/$(uid)) ? 4
+        : exists(/databases/$(database)/documents/admins/$(uid)) ? 3
+        : staffRole(uid) == 'moderator' ? 2 : staffRole(uid) == 'helper' ? 1 : 0;
+    }
+    function myRank() { return signed() ? userRank(request.auth.uid) : -1; }
+    function moderator() { return myRank() >= 2; }
+    function canManage(uid) { return signed() && uid != request.auth.uid && myRank() > userRank(uid); }
+    function protectedUser(uid) { return userRank(uid) >= 3; }
+    function pfpAllowed(uid) { return !exists(/databases/$(database)/documents/uploadRestrictions/$(uid)) || get(/databases/$(database)/documents/uploadRestrictions/$(uid)).data.get('pfpBlocked', false) == false; }
+    function mediaAllowed(uid) { return !exists(/databases/$(database)/documents/uploadRestrictions/$(uid)) || get(/databases/$(database)/documents/uploadRestrictions/$(uid)).data.get('mediaBlocked', false) == false; }
+    function canDeleteMessage(data) {
+      // Use today's actual role as well as the recorded role for older messages.
+      return signed() && (data.authorUid == request.auth.uid || (
+        myRank() >= 1 && canManage(data.authorUid)
+        && myRank() > (data.get('authorRole','user') == 'owner' ? 4 : data.get('authorRole','user') == 'admin' ? 3 : data.get('authorRole','user') == 'moderator' ? 2 : data.get('authorRole','user') == 'helper' ? 1 : 0)
+      ));
+    }
+    function validNameStyle(data) {
+      return (!data.keys().hasAny(['nameColorEnabled']) || data.nameColorEnabled is bool)
+        && (!data.keys().hasAny(['nameGlowEnabled']) || data.nameGlowEnabled is bool);
+    }
+    function channelAllowed(room) { return !exists(/databases/$(database)/documents/accessBans/$(request.auth.uid + '__channel__' + room)); }
+    function validRoom(room) { return room in ['general','games','random','images'] || (room is string && room.size() > 0 && room.size() <= 40 && exists(/databases/$(database)/documents/tempRooms/$(room)) && get(/databases/$(database)/documents/tempRooms/$(room)).data.lastActiveAt > request.time - duration.value(10, 'm')); }
+    function notMuted() { return !exists(/databases/$(database)/documents/moderation/$(request.auth.uid)) || get(/databases/$(database)/documents/moderation/$(request.auth.uid)).data.mutedUntil <= request.time; }
+    function displayRoleAllowed(value) {
+      return value == 'user' || (value == 'helper' && myRank() >= 1)
+        || (value == 'moderator' && myRank() >= 2)
+        || (value == 'admin' && myRank() >= 3) || (value == 'owner' && myRank() == 4);
+    }
+    function validDisplayRole(data) { return !data.keys().hasAny(['displayRole']) || displayRoleAllowed(data.displayRole); }
+    function validAuthorRole(data) {
+      return signed() && data.authorRole == (myRank() == 4 ? 'owner' : myRank() == 3 ? 'admin' : myRank() == 2 ? 'moderator' : myRank() == 1 ? 'helper' : 'user');
+    }
+    function validPresenceRole(data) { return displayRoleAllowed(data.role); }
+    function staffCanManageCreator(data) { return owner() || (admin() && data.creatorRole == 'admin'); }
+    function grantableTitle(titleId) {
+      return titleId in [
+        'certified','explorer','doomed','gambler','html','social','lifeless',
+        'online','idiot','reaction','yapper','architect','loving','first100',
+        'pumpkin','colorful','normal','rickrolled','mystery','grass','noimage',
+        'main','everything','silliest','giveaway_winner',
+        'owner_favorite','please_go_outside','trans_flag','moderately_powerful'
+      ];
+    }
+    function specialTitle(titleId) {
+      return titleId in ['owner_favorite','please_go_outside','trans_flag','moderately_powerful'];
+    }
+    function canGiveTitle(titleId) {
+      return (titleId in ['owner_favorite','please_go_outside','trans_flag'] && owner())
+        || (titleId == 'moderately_powerful' && admin() && !owner())
+        || (grantableTitle(titleId) && !specialTitle(titleId) && staff());
+    }
+    function hasGiftedTitle(titleId, grantorRole) {
+      let path = /databases/$(database)/documents/titleGrants/$(request.auth.uid + '__' + titleId);
+      return exists(path)
+        && get(path).data.targetUid == request.auth.uid
+        && get(path).data.titleId == titleId
+        && get(path).data.grantorRole == grantorRole;
+    }
+    function validSelectedTitle(data) {
+      return !data.keys().hasAny(['title']) || (
+        data.title is string && data.title.size() <= 40
+        && (
+          (data.title == "THE OWNER’S FAVORITE" && (owner() || hasGiftedTitle('owner_favorite', 'owner')))
+          || (data.title == 'PLEASE GO OUTSIDE' && (owner() || hasGiftedTitle('please_go_outside', 'owner')))
+          || (data.title == '🏳️‍⚧️' && (owner() || hasGiftedTitle('trans_flag', 'owner')))
+          || (data.title == 'MODERATELY POWERFUL' && ((!owner() && admin()) || hasGiftedTitle('moderately_powerful', 'admin')))
+          || !(data.title in ["THE OWNER’S FAVORITE",'PLEASE GO OUTSIDE','🏳️‍⚧️','MODERATELY POWERFUL'])
+        )
+      );
+    }
+    function validProfile(data, uid) {
+      return data.keys().hasOnly(['imageData','bio','favoriteGame','currentTheme','updatedAt','updatedBy'])
+        && data.updatedAt == request.time
+        && data.updatedBy == uid
+        && (!data.keys().hasAny(['imageData']) || (
+          data.imageData is string
+          && data.imageData.size() <= 68000
+          && data.imageData.matches('^data:image/jpeg;base64,.*')
+        ))
+        && (!data.keys().hasAny(['bio']) || (data.bio is string && data.bio.size() <= 160))
+        && (!data.keys().hasAny(['favoriteGame']) || (data.favoriteGame is string && data.favoriteGame.size() <= 80))
+        && (!data.keys().hasAny(['currentTheme']) || (data.currentTheme is string && data.currentTheme.size() <= 30));
+    }
+    function validMessageBody(data) {
+      return (
+        (!data.keys().hasAny(['messageType']) || data.messageType in ['text','code'])
+        && data.text is string && data.text.size() > 0 && data.text.size() <= 5000
+      ) || (
+        data.messageType == 'sticker'
+        && data.sticker in ['👁️','💀','😭','🔥','🎃','🏳️‍⚧️','🫪']
+        && data.text == ''
+      ) || (
+        data.messageType == 'game'
+        && data.gameIndex is int && data.gameIndex >= 0 && data.gameIndex < 100
+        && data.text == ''
+      ) || (
+        data.messageType == 'image'
+        && data.imageData is string
+        && data.imageData.size() <= 140000
+        && data.imageData.matches('^data:image/jpeg;base64,.*')
+        && data.text == ''
+      );
+    }
+
+    match /ownerDevices/{uid} {
+      allow get: if signed() && (uid == request.auth.uid || primaryOwner());
+      allow list, create, update, delete: if primaryOwner();
+    }
+    match /admins/{uid} {
+      allow get: if signed() && (uid == request.auth.uid || owner());
+      allow list, create, update, delete: if owner();
+    }
+    match /staffRoles/{uid} {
+      allow read: if signed();
+      allow create, update: if staff() && canManage(uid)
+        && request.resource.data.keys().hasOnly(['name','role','addedAt','addedBy'])
+        && request.resource.data.name is string && request.resource.data.name.size() <= 30
+        && request.resource.data.role in ['moderator','helper']
+        && request.resource.data.addedAt == request.time
+        && request.resource.data.addedBy == request.auth.uid;
+      allow delete: if staff() && canManage(uid);
+    }
+    // Old grant documents are kept for compatibility; uploads now use restrictions.
+    match /pfpAccess/{uid} {
+      allow get: if signed() && (uid == request.auth.uid || owner());
+      allow list, create, update, delete: if owner();
+    }
+    match /mediaAccess/{uid} {
+      allow get: if signed() && (uid == request.auth.uid || owner());
+      allow list, create, update, delete: if owner();
+    }
+    match /uploadRestrictions/{uid} {
+      allow get: if signed() && (uid == request.auth.uid || moderator());
+      allow list: if moderator();
+      allow create, update: if moderator() && canManage(uid)
+        && request.resource.data.keys().hasOnly(['name','pfpBlocked','mediaBlocked','updatedAt','updatedBy'])
+        && request.resource.data.get('name','') is string && request.resource.data.get('name','').size() <= 30
+        && request.resource.data.get('pfpBlocked',false) is bool
+        && request.resource.data.get('mediaBlocked',false) is bool
+        && request.resource.data.updatedAt == request.time
+        && request.resource.data.updatedBy == request.auth.uid;
+      allow delete: if moderator() && canManage(uid);
+    }
+    match /profiles/{uid} {
+      allow read: if signed();
+      allow create: if signed() && uid == request.auth.uid
+        && validProfile(request.resource.data, request.auth.uid)
+        && (!request.resource.data.keys().hasAny(['imageData']) || pfpAllowed(uid));
+      allow update: if signed() && (
+        (uid == request.auth.uid && validProfile(request.resource.data, request.auth.uid)
+          && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['imageData'])
+            || !request.resource.data.keys().hasAny(['imageData']) || pfpAllowed(uid)))
+        || (moderator() && canManage(uid)
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['imageData','updatedAt','updatedBy'])
+          && !request.resource.data.keys().hasAny(['imageData'])
+          && validProfile(request.resource.data, request.auth.uid))
+      );
+      allow delete: if signed() && uid == request.auth.uid;
+    }
+    match /titleGrants/{grantId} {
+      allow read: if signed();
+      allow create: if staff()
+        && request.resource.data.keys().hasOnly(['targetUid','titleId','grantedAt','grantedBy','grantorRole'])
+        && request.resource.data.targetUid is string
+        && request.resource.data.targetUid.size() > 0
+        && request.resource.data.titleId is string
+        && canGiveTitle(request.resource.data.titleId)
+        && grantId == request.resource.data.targetUid + '__' + request.resource.data.titleId
+        && request.resource.data.grantedAt == request.time
+        && request.resource.data.grantedBy == request.auth.uid
+        && ((owner() && request.resource.data.grantorRole == 'owner') || (!owner() && admin() && request.resource.data.grantorRole == 'admin'))
+        && (specialTitle(request.resource.data.titleId) || owner() || (request.resource.data.targetUid != request.auth.uid && !protectedUser(request.resource.data.targetUid)));
+      allow update: if false;
+      allow delete: if owner() || (admin() && canGiveTitle(resource.data.titleId) && resource.data.targetUid != request.auth.uid && !protectedUser(resource.data.targetUid));
+    }
+    match /giveaways/{giveawayId} {
+      allow read: if true;
+      allow create: if staff()
+        && request.resource.data.keys().hasOnly(['announcementId','prize','closesAt','winnerCount','status','createdAt','createdBy','creatorRole','winners','rerollCount'])
+        && request.resource.data.announcementId is string
+        && request.resource.data.prize is string
+        && request.resource.data.prize.size() > 0
+        && request.resource.data.prize.size() <= 200
+        && request.resource.data.closesAt is timestamp
+        && request.resource.data.closesAt > request.time
+        && request.resource.data.winnerCount is int
+        && request.resource.data.winnerCount >= 1
+        && request.resource.data.winnerCount <= 10
+        && request.resource.data.status == 'open'
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.createdBy == request.auth.uid
+        && ((owner() && request.resource.data.creatorRole == 'owner') || (!owner() && admin() && request.resource.data.creatorRole == 'admin'))
+        && request.resource.data.winners is list
+        && request.resource.data.winners.size() == 0
+        && request.resource.data.rerollCount == 0;
+      allow update: if staff()
+        && staffCanManageCreator(resource.data)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','winners','endedAt','endedBy','rerollCount'])
+        && request.resource.data.status == 'closed'
+        && request.resource.data.winners is list
+        && request.resource.data.winners.size() <= resource.data.winnerCount
+        && request.resource.data.endedAt == request.time
+        && request.resource.data.endedBy == request.auth.uid
+        && request.resource.data.rerollCount is int
+        && request.resource.data.rerollCount >= resource.data.rerollCount;
+      allow delete: if staff() && staffCanManageCreator(resource.data);
+      match /entries/{uid} {
+        allow read: if true;
+        allow create: if signed()
+          && uid == request.auth.uid
+          && request.resource.data.keys().hasOnly(['uid','name','enteredAt'])
+          && request.resource.data.uid == request.auth.uid
+          && request.resource.data.name is string
+          && request.resource.data.name.size() <= 30
+          && request.resource.data.enteredAt == request.time
+          && get(/databases/$(database)/documents/giveaways/$(giveawayId)).data.status == 'open'
+          && get(/databases/$(database)/documents/giveaways/$(giveawayId)).data.closesAt > request.time;
+        allow update: if false;
+        allow delete: if signed() && (uid == request.auth.uid || staff());
+      }
+    }
+    match /siteVisitors/{visitorId} {
+      allow read: if true;
+      allow create: if signed()
+        && request.resource.data.keys().hasOnly(['createdAt'])
+        && request.resource.data.createdAt == request.time;
+      allow update, delete: if false;
+    }
+    match /accessBans/{banId} {
+      allow get: if signed() && (banId.matches('^' + request.auth.uid + '__(channel|games)__.*$') || staff());
+      allow list: if staff();
+      allow create, update: if staff()
+        && request.resource.data.keys().hasOnly(['targetUid','type','target','reason','createdAt','bannedBy'])
+        && request.resource.data.targetUid is string
+        && request.resource.data.type in ['channel','games']
+        && ((request.resource.data.type == 'games' && request.resource.data.target == 'all') || (request.resource.data.type == 'channel' && request.resource.data.target is string && request.resource.data.target.size() > 0 && request.resource.data.target.size() <= 40))
+        && banId == request.resource.data.targetUid + '__' + request.resource.data.type + '__' + request.resource.data.target
+        && request.resource.data.reason is string && request.resource.data.reason.size() > 0 && request.resource.data.reason.size() <= 200
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.bannedBy == request.auth.uid
+        && request.resource.data.targetUid != request.auth.uid
+        && (owner() || !protectedUser(request.resource.data.targetUid));
+      allow delete: if owner() || (admin() && !protectedUser(resource.data.targetUid));
+    }
+    match /tempRooms/{roomId} {
+      allow read: if signed();
+      allow create: if signed()
+        && request.resource.data.keys().hasOnly(['name','createdBy','createdAt','lastActiveAt'])
+        && request.resource.data.name is string && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 24
+        && request.resource.data.createdBy == request.auth.uid
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.lastActiveAt == request.time;
+      allow update: if signed()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['lastActiveAt'])
+        && resource.data.lastActiveAt > request.time - duration.value(10, 'm')
+        && request.resource.data.lastActiveAt == request.time;
+      allow delete: if signed() && (resource.data.createdBy == request.auth.uid || staff() || resource.data.lastActiveAt < request.time - duration.value(10, 'm'));
+    }
+    match /announcements/{postId} {
+      allow read: if true;
+      allow create: if staff() && request.resource.data.authorUid == request.auth.uid && (owner() || (!request.resource.data.keys().hasAny(['imageData','important'])));
+      allow update: if owner() || (admin() && resource.data.authorRole == 'admin' && resource.data.authorUid == request.auth.uid);
+      allow delete: if owner() || (admin() && resource.data.authorRole == 'admin');
+      match /votes/{uid} {
+        allow read: if true;
+        allow create: if signed() && uid == request.auth.uid && !exists(/databases/$(database)/documents/announcements/$(postId)/votes/$(uid));
+      }
+    }
+    match /chatMessages/{messageId} {
+      allow read: if true;
+      allow create: if signed()
+        && request.resource.data.authorUid == request.auth.uid
+        && request.resource.data.name is string && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 30
+        && request.resource.data.nameColor is string && request.resource.data.nameColor.matches('^#[0-9a-fA-F]{6}$')
+        && request.resource.data.room is string && validRoom(request.resource.data.room)
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.pinned == false
+        && validSelectedTitle(request.resource.data)
+        && validMessageBody(request.resource.data)
+        && (request.resource.data.get('messageType','text') != 'image' || mediaAllowed(request.auth.uid))
+        && validAuthorRole(request.resource.data)
+        && validDisplayRole(request.resource.data)
+        && validNameStyle(request.resource.data)
+        && notMuted() && channelAllowed(request.resource.data.room);
+      allow update: if signed() && (
+        (resource.data.authorUid == request.auth.uid
+          && channelAllowed(resource.data.room)
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['text','editedAt'])
+          && request.resource.data.text is string && request.resource.data.text.size() > 0 && request.resource.data.text.size() <= 5000
+          && request.resource.data.editedAt == request.time)
+        || (staff()
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['pinned'])
+          && request.resource.data.pinned is bool)
+      );
+      allow delete: if canDeleteMessage(resource.data);
+    }
+    match /messageReactions/{reactionId} {
+      allow read: if signed();
+      allow create, update: if signed()
+        && reactionId == request.resource.data.messageId + '__' + request.auth.uid
+        && request.resource.data.keys().hasOnly(['messageId','userUid','emoji','createdAt'])
+        && request.resource.data.userUid == request.auth.uid
+        && request.resource.data.messageId is string
+        && request.resource.data.emoji in ['😭','💀','🔥',':3','⭐']
+        && request.resource.data.createdAt == request.time;
+      allow delete: if signed() && resource.data.userUid == request.auth.uid;
+    }
+    match /messageLogs/{messageId} {
+      allow read: if moderator();
+      allow create: if signed()
+        && messageId == request.resource.data.messageId
+        && request.resource.data.name is string && request.resource.data.text is string
+        && request.resource.data.room is string && request.resource.data.room.size() > 0 && request.resource.data.room.size() <= 40
+        && ((request.resource.data.authorUid == request.auth.uid && request.resource.data.status == 'active')
+          || (request.resource.data.status == 'deleted'
+            && exists(/databases/$(database)/documents/chatMessages/$(messageId))
+            && request.resource.data.authorUid == get(/databases/$(database)/documents/chatMessages/$(messageId)).data.authorUid
+            && canDeleteMessage(get(/databases/$(database)/documents/chatMessages/$(messageId)).data)));
+      allow update: if signed() && request.resource.data.authorUid == resource.data.authorUid && (
+        (resource.data.authorUid == request.auth.uid)
+        || (request.resource.data.status == 'deleted'
+          && exists(/databases/$(database)/documents/chatMessages/$(messageId))
+          && resource.data.authorUid == get(/databases/$(database)/documents/chatMessages/$(messageId)).data.authorUid
+          && canDeleteMessage(get(/databases/$(database)/documents/chatMessages/$(messageId)).data))
+      );
+      allow delete: if primaryOwner();
+    }
+    match /presence/{uid} {
+      allow read: if signed();
+      allow create, update: if signed()
+        && uid == request.auth.uid
+        && request.resource.data.keys().hasOnly(['name','nameColor','room','role','avatar','status','title','borderColor','activity','device','battery','charging','lastSeen','nameColorEnabled','nameGlowEnabled'])
+        && request.resource.data.name is string && request.resource.data.name.size() <= 30
+        && request.resource.data.nameColor is string && request.resource.data.nameColor.matches('^#[0-9a-fA-F]{6}$')
+        && request.resource.data.room is string && request.resource.data.room.size() > 0 && request.resource.data.room.size() <= 40
+        && request.resource.data.avatar is string && request.resource.data.avatar.size() <= 8
+        && request.resource.data.status is string && request.resource.data.status.size() <= 30
+        && validSelectedTitle(request.resource.data)
+        && request.resource.data.borderColor is string && request.resource.data.borderColor.matches('^#[0-9a-fA-F]{6}$')
+        && request.resource.data.activity is string && request.resource.data.activity.size() <= 80
+        && request.resource.data.device in ['Phone','Chromebook','Computer','VR','Tablet']
+        && (!request.resource.data.keys().hasAny(['battery','charging']) || (
+          request.resource.data.battery is int
+          && request.resource.data.battery >= 0
+          && request.resource.data.battery <= 100
+          && request.resource.data.charging is bool
+        ))
+        && request.resource.data.lastSeen == request.time
+        && validNameStyle(request.resource.data)
+        && validPresenceRole(request.resource.data);
+      allow delete: if signed() && uid == request.auth.uid;
+    }
+    match /moderation/{uid} {
+      allow read: if signed() && (uid == request.auth.uid || moderator());
+      allow create, update: if moderator() && canManage(uid)
+        && request.resource.data.keys().hasOnly(['name','mutedUntil','mutedBy'])
+        && request.resource.data.name is string && request.resource.data.name.size() <= 30
+        && request.resource.data.mutedUntil is timestamp && request.resource.data.mutedUntil > request.time
+        && request.resource.data.mutedBy == request.auth.uid;
+      allow delete: if moderator() && canManage(uid);
+    }
+    match /moderationAlerts/{alertId} {
+      allow read, delete: if moderator();
+      allow update: if moderator()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','reviewedAt','reviewedBy'])
+        && request.resource.data.status == 'reviewed'
+        && request.resource.data.reviewedAt == request.time
+        && request.resource.data.reviewedBy == request.auth.uid;
+      allow create: if signed()
+        && request.resource.data.keys().hasOnly(['authorUid','name','text','room','createdAt','status'])
+        && request.resource.data.authorUid == request.auth.uid
+        && request.resource.data.name is string && request.resource.data.name.size() <= 30
+        && request.resource.data.text is string && request.resource.data.text.size() > 0 && request.resource.data.text.size() <= 5000
+        && request.resource.data.room is string && request.resource.data.room.size() <= 40
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.status == 'open';
+    }
+  }
+}
