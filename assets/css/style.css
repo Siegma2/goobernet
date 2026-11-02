@@ -476,7 +476,7 @@ html[data-theme="custom"][data-custom-image="true"] .backdrop{background-image:l
 .upgrade-status{grid-column:1/-1;padding:12px;border:1px dashed var(--theme-accent);color:var(--theme-muted)}.upgrade-status[hidden]{display:none}
 
 /* Owner badge gently cycles colors without flashing. */
-.role-badge.role-owner,.owner-badge{color:#ffb3d1;background:transparent;border-color:currentColor;animation:owner-colors 12s linear infinite}
+.creature-name.owner-rainbow{animation:owner-colors 12s linear infinite}
 @keyframes owner-colors{0%,100%{color:#ffb3d1}16.67%{color:#ffc9a8}33.33%{color:#fff0a6}50%{color:#b5efd0}66.67%{color:#adddff}83.33%{color:#d8bfff}}
-@media(prefers-reduced-motion:reduce){.role-badge.role-owner,.owner-badge{animation:none;color:#d2a8ff}}
+@media(prefers-reduced-motion:reduce){.creature-name.owner-rainbow{animation:none!important;color:#d8bfff!important}}
 #chat-badge-guide{display:grid;gap:8px}#chat-badge-guide .unlocked b{color:var(--theme-accent)}
