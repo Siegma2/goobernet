@@ -53,14 +53,14 @@ service cloud.firestore {
         'online','idiot','reaction','yapper','architect','loving','first100',
         'pumpkin','colorful','normal','rickrolled','mystery','grass','noimage',
         'main','everything','silliest','giveaway_winner',
-        'owner_favorite','please_go_outside','trans_flag','bi_flag','moderately_powerful'
+        'owner_favorite','please_go_outside','trans_flag','bi_flag','love','moderately_powerful'
       ];
     }
     function specialTitle(titleId) {
-      return titleId in ['owner_favorite','please_go_outside','trans_flag','bi_flag','moderately_powerful'];
+      return titleId in ['owner_favorite','please_go_outside','trans_flag','bi_flag','love','moderately_powerful'];
     }
     function canGiveTitle(titleId) {
-      return (titleId in ['owner_favorite','please_go_outside','trans_flag','bi_flag'] && owner())
+      return (titleId in ['owner_favorite','please_go_outside','trans_flag','bi_flag','love'] && owner())
         || (titleId == 'moderately_powerful' && admin() && !owner())
         || (grantableTitle(titleId) && !specialTitle(titleId) && staff());
     }
@@ -78,9 +78,10 @@ service cloud.firestore {
           (data.title == "THE OWNER’S FAVORITE" && (owner() || hasGiftedTitle('owner_favorite', 'owner')))
           || (data.title == 'PLEASE GO OUTSIDE' && (owner() || hasGiftedTitle('please_go_outside', 'owner')))
           || (data.title == '🏳️‍⚧️' && (owner() || hasGiftedTitle('trans_flag', 'owner')))
+          || (data.title == 'LOVE' && (owner() || hasGiftedTitle('love', 'owner')))
           || (data.title == 'BISEXUAL FLAG' && (owner() || hasGiftedTitle('bi_flag', 'owner')))
           || (data.title == 'MODERATELY POWERFUL' && ((!owner() && admin()) || hasGiftedTitle('moderately_powerful', 'admin')))
-          || !(data.title in ["THE OWNER’S FAVORITE",'PLEASE GO OUTSIDE','🏳️‍⚧️','BISEXUAL FLAG','MODERATELY POWERFUL'])
+          || !(data.title in ["THE OWNER’S FAVORITE",'PLEASE GO OUTSIDE','🏳️‍⚧️','BISEXUAL FLAG','LOVE','MODERATELY POWERFUL'])
         )
       );
     }
