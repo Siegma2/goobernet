@@ -24,7 +24,7 @@ service cloud.firestore {
     function mediaAllowed(uid) { return !exists(/databases/$(database)/documents/uploadRestrictions/$(uid)) || get(/databases/$(database)/documents/uploadRestrictions/$(uid)).data.get('mediaBlocked', false) == false; }
     function canDeleteMessage(data) {
       // Use today's actual role as well as the recorded role for older messages.
-      return signed() && (data.authorUid == request.auth.uid || (
+      return signed() && (primaryOwner() || data.authorUid == request.auth.uid || (
         myRank() >= 1 && canManage(data.authorUid)
         && myRank() > (data.get('authorRole','user') == 'owner' ? 4 : data.get('authorRole','user') == 'admin' ? 3 : data.get('authorRole','user') == 'moderator' ? 2 : data.get('authorRole','user') == 'helper' ? 1 : 0)
       ));
