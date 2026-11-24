@@ -2,7 +2,7 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     function signed() { return request.auth != null; }
-    function primaryOwner() { return signed() && request.auth.uid == 'dj3hr2HeXjh5npNXkB9wPws86nF2'; }
+    function primaryOwner() { return signed() && request.auth.uid == 'P282k6sN1AUM566ypTv9AukmRsE3'; }
     function owner() { return primaryOwner() || (signed() && exists(/databases/$(database)/documents/ownerDevices/$(request.auth.uid))); }
     function admin() { return signed() && exists(/databases/$(database)/documents/admins/$(request.auth.uid)); }
     // Announcements, giveaways and title grants remain owner/admin-only.
@@ -12,7 +12,7 @@ service cloud.firestore {
         ? get(/databases/$(database)/documents/staffRoles/$(uid)).data.role : 'user';
     }
     function userRank(uid) {
-      return uid == 'dj3hr2HeXjh5npNXkB9wPws86nF2' || exists(/databases/$(database)/documents/ownerDevices/$(uid)) ? 4
+      return uid == 'P282k6sN1AUM566ypTv9AukmRsE3' || exists(/databases/$(database)/documents/ownerDevices/$(uid)) ? 4
         : exists(/databases/$(database)/documents/admins/$(uid)) ? 3
         : staffRole(uid) == 'moderator' ? 2 : staffRole(uid) == 'helper' ? 1 : 0;
     }
